@@ -84,11 +84,11 @@ param cogServiceEndpoint string
 @secure()
 param cogServiceKey string
 param cogServiceName string
-param sqldbserver string
-param sqldbdatabase string
-param sqldbusername string
+param sqlServerName string
+param sqlDbName string
+param sqlDbUser string
 @secure()
-param sqldbuserpwd string
+param sqlDbPwd string
 
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: kvName
@@ -318,7 +318,7 @@ resource sqldbServerEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview'
   parent: keyVault
   name: 'SQLDB_SERVER'
   properties: {
-    value: sqldbserver
+    value: sqlServerName
   }
 }
 
@@ -326,7 +326,7 @@ resource sqldbDatabaseEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-previe
   parent: keyVault
   name: 'SQLDB_DATABASE'
   properties: {
-    value: sqldbdatabase
+    value: sqlDbName
   }
 }
 
@@ -334,7 +334,7 @@ resource sqldbDatabaseUsername 'Microsoft.KeyVault/vaults/secrets@2021-11-01-pre
   parent: keyVault
   name: 'SQLDB_USERNAME'
   properties: {
-    value: sqldbusername
+    value: sqlDbUser
   }
 }
 
@@ -342,7 +342,7 @@ resource sqldbDatabasePwd 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview'
   parent: keyVault
   name: 'SQLDB_PASSWORD'
   properties: {
-    value: sqldbuserpwd
+    value: sqlDbPwd
   }
 }
 

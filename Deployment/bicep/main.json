@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "17230589673565533764"
+      "templateHash": "941091398660057267"
     }
   },
   "parameters": {
@@ -300,7 +300,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "8319289119495652564"
+              "templateHash": "1783119594507664483"
             }
           },
           "parameters": {
@@ -384,10 +384,10 @@
               "type": "object",
               "value": {
                 "id": "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
-                "sqlservername": "[format('{0}.database.windows.net', parameters('serverName'))]",
-                "sqldbname": "[parameters('sqlDBName')]",
-                "sqldbuser": "[parameters('administratorLogin')]",
-                "sqlServerAdminPassword": "[parameters('administratorLoginPassword')]"
+                "sqlServerName": "[format('{0}.database.windows.net', parameters('serverName'))]",
+                "sqlDbName": "[parameters('sqlDBName')]",
+                "sqlDbUser": "[parameters('administratorLogin')]",
+                "sqlDbPwd": "[parameters('administratorLoginPassword')]"
               }
             }
           }
@@ -843,17 +843,17 @@
           "cogServiceKey": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_azure_ai_service'), '2022-09-01').outputs.cogSearchOutput.value.cogServiceKey]"
           },
-          "sqldbserver": {
+          "sqlServerName": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlServerName]"
           },
-          "sqldbdatabase": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlDBName]"
+          "sqlDbName": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlDbName]"
           },
-          "sqldbusername": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlServerAdminLogin]"
+          "sqlDbUser": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlDbUser]"
           },
-          "sqldbuserpwd": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlServerAdminPassword]"
+          "sqlDbPwd": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlDbPwd]"
           },
           "enableSoftDelete": {
             "value": false
@@ -866,7 +866,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "3479818606557014"
+              "templateHash": "17091079742638205604"
             }
           },
           "parameters": {
@@ -1024,16 +1024,16 @@
             "cogServiceName": {
               "type": "string"
             },
-            "sqldbserver": {
+            "sqlServerName": {
               "type": "string"
             },
-            "sqldbdatabase": {
+            "sqlDbName": {
               "type": "string"
             },
-            "sqldbusername": {
+            "sqlDbUser": {
               "type": "string"
             },
-            "sqldbuserpwd": {
+            "sqlDbPwd": {
               "type": "securestring"
             }
           },
@@ -1280,7 +1280,7 @@
               "apiVersion": "2021-11-01-preview",
               "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB_SERVER')]",
               "properties": {
-                "value": "[parameters('sqldbserver')]"
+                "value": "[parameters('sqlServerName')]"
               },
               "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('kvName'))]"
@@ -1291,7 +1291,7 @@
               "apiVersion": "2021-11-01-preview",
               "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB_DATABASE')]",
               "properties": {
-                "value": "[parameters('sqldbdatabase')]"
+                "value": "[parameters('sqlDbName')]"
               },
               "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('kvName'))]"
@@ -1302,7 +1302,7 @@
               "apiVersion": "2021-11-01-preview",
               "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB_USERNAME')]",
               "properties": {
-                "value": "[parameters('sqldbusername')]"
+                "value": "[parameters('sqlDbUser')]"
               },
               "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('kvName'))]"
@@ -1313,7 +1313,7 @@
               "apiVersion": "2021-11-01-preview",
               "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB_PASSWORD')]",
               "properties": {
-                "value": "[parameters('sqldbuserpwd')]"
+                "value": "[parameters('sqlDbPwd')]"
               },
               "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('kvName'))]"
