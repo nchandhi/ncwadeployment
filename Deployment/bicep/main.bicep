@@ -133,6 +133,10 @@ module keyvaultModule 'deploy_keyvault.bicep' = {
     cogServiceEndpoint:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceEndpoint
     cogServiceName:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceName
     cogServiceKey:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceKey
+    sqldbserver:sqlDBModule.outputs.sqlDbOutput.sqlServerName
+    sqldbdatabase:sqlDBModule.outputs.sqlDbOutput.sqlDBName
+    sqldbusername:sqlDBModule.outputs.sqlDbOutput.sqlServerAdminLogin
+    sqldbuserpwd:sqlDBModule.outputs.sqlDbOutput.sqlServerAdminPassword
     enableSoftDelete:false
   }
   scope: resourceGroup(resourceGroup().name)

@@ -39,3 +39,11 @@ resource sqlDB 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
     tier: 'Standard'
   }
 }
+
+output sqlDbOutput object = {
+  id: sqlServer.id
+  sqlservername: '${serverName}.database.windows.net' 
+  sqldbname: sqlDBName
+  sqldbuser: administratorLogin
+  sqlServerAdminPassword: administratorLoginPassword
+}
