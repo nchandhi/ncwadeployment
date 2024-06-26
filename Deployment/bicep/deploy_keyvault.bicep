@@ -79,9 +79,7 @@ param azureOpenAIEndpoint string
 param azureSearchAdminKey string
 param azureSearchServiceEndpoint string
 param azureSearchServiceName string
-param azureSearchArticlesIndex string
-param azureSearchGrantsIndex string
-param azureSearchDraftsIndex string
+param azureSearchIndex string
 param cogServiceEndpoint string
 @secure()
 param cogServiceKey string
@@ -255,30 +253,13 @@ resource azureSearchServiceEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-p
   }
 }
 
-resource azureSearchArticlesIndexEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
+resource azureSearchIndexEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
   parent: keyVault
-  name: 'AZURE-SEARCH-INDEX-ARTICLES'
+  name: 'AZURE-SEARCH-INDEX'
   properties: {
-    value: azureSearchArticlesIndex
+    value: azureSearchIndex
   }
 }
-
-resource azureSearchGrantsIndexEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
-  parent: keyVault
-  name: 'AZURE-SEARCH-INDEX-GRANTS'
-  properties: {
-    value: azureSearchGrantsIndex
-  }
-}
-
-resource azureSearchDraftsIndexEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
-  parent: keyVault
-  name: 'AZURE-SEARCH-INDEX-DRAFTS'
-  properties: {
-    value: azureSearchDraftsIndex
-  }
-}
-
 
 resource cogServiceEndpointEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
   parent: keyVault
