@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "941091398660057267"
+      "templateHash": "6127467488152507194"
     }
   },
   "parameters": {
@@ -300,7 +300,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "1783119594507664483"
+              "templateHash": "11644507138528991951"
             }
           },
           "parameters": {
@@ -383,7 +383,6 @@
             "sqlDbOutput": {
               "type": "object",
               "value": {
-                "id": "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]",
                 "sqlServerName": "[format('{0}.database.windows.net', parameters('serverName'))]",
                 "sqlDbName": "[parameters('sqlDBName')]",
                 "sqlDbUser": "[parameters('administratorLogin')]",

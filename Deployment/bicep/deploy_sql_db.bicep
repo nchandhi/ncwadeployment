@@ -41,7 +41,6 @@ resource sqlDB 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
 }
 
 output sqlDbOutput object = {
-  id: sqlServer.id
   sqlServerName: '${serverName}.database.windows.net' 
   sqlDbName: sqlDBName
   sqlDbUser: administratorLogin

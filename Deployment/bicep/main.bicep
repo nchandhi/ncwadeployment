@@ -140,7 +140,7 @@ module keyvaultModule 'deploy_keyvault.bicep' = {
     enableSoftDelete:false
   }
   scope: resourceGroup(resourceGroup().name)
-  dependsOn:[storageAccountModule,azOpenAI,azSearchService]
+  dependsOn:[storageAccountModule,azOpenAI,azSearchService,sqlDBModule]
 }
 
 // module createIndex 'deploy_index_scripts.bicep' = {
