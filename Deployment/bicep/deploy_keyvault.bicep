@@ -316,7 +316,7 @@ resource azureLocatioEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview
 
 resource sqldbServerEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
   parent: keyVault
-  name: 'SQLDB_SERVER'
+  name: 'SQLDB-SERVER'
   properties: {
     value: sqlServerName
   }
@@ -324,7 +324,7 @@ resource sqldbServerEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview'
 
 resource sqldbDatabaseEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
   parent: keyVault
-  name: 'SQLDB_DATABASE'
+  name: 'SQLDB-DATABASE'
   properties: {
     value: sqlDbName
   }
@@ -332,7 +332,7 @@ resource sqldbDatabaseEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-previe
 
 resource sqldbDatabaseUsername 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
   parent: keyVault
-  name: 'SQLDB_USERNAME'
+  name: 'SQLDB-USERNAME'
   properties: {
     value: sqlDbUser
   }
@@ -340,7 +340,7 @@ resource sqldbDatabaseUsername 'Microsoft.KeyVault/vaults/secrets@2021-11-01-pre
 
 resource sqldbDatabasePwd 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
   parent: keyVault
-  name: 'SQLDB_PASSWORD'
+  name: 'SQLDB-PASSWORD'
   properties: {
     value: sqlDbPwd
   }

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "9042266119283679774"
+      "templateHash": "9260005103919826152"
     }
   },
   "parameters": {
@@ -865,7 +865,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "17091079742638205604"
+              "templateHash": "12144928080353588229"
             }
           },
           "parameters": {
@@ -1277,7 +1277,7 @@
             {
               "type": "Microsoft.KeyVault/vaults/secrets",
               "apiVersion": "2021-11-01-preview",
-              "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB_SERVER')]",
+              "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB-SERVER')]",
               "properties": {
                 "value": "[parameters('sqlServerName')]"
               },
@@ -1288,7 +1288,7 @@
             {
               "type": "Microsoft.KeyVault/vaults/secrets",
               "apiVersion": "2021-11-01-preview",
-              "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB_DATABASE')]",
+              "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB-DATABASE')]",
               "properties": {
                 "value": "[parameters('sqlDbName')]"
               },
@@ -1299,7 +1299,7 @@
             {
               "type": "Microsoft.KeyVault/vaults/secrets",
               "apiVersion": "2021-11-01-preview",
-              "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB_USERNAME')]",
+              "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB-USERNAME')]",
               "properties": {
                 "value": "[parameters('sqlDbUser')]"
               },
@@ -1310,7 +1310,7 @@
             {
               "type": "Microsoft.KeyVault/vaults/secrets",
               "apiVersion": "2021-11-01-preview",
-              "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB_PASSWORD')]",
+              "name": "[format('{0}/{1}', parameters('kvName'), 'SQLDB-PASSWORD')]",
               "properties": {
                 "value": "[parameters('sqlDbPwd')]"
               },

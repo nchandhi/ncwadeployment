@@ -13,10 +13,10 @@ def get_secrets_from_kv(kv_name, secret_name):
     secret_client = SecretClient(vault_url=f"https://{key_vault_name}.vault.azure.net/", credential=credential)  # Create a secret client object using the credential and Key Vault name  
     return(secret_client.get_secret(secret_name).value) # Retrieve the secret value  
 
-server = get_secrets_from_kv(key_vault_name,"SQLDB_SERVER")
-database = get_secrets_from_kv(key_vault_name,"SQLDB_DATABASE")
-username = get_secrets_from_kv(key_vault_name,"SQLDB_USERNAME")
-password = get_secrets_from_kv(key_vault_name,"SQLDB_PASSWORD")
+server = get_secrets_from_kv(key_vault_name,"SQLDB-SERVER")
+database = get_secrets_from_kv(key_vault_name,"SQLDB-DATABASE")
+username = get_secrets_from_kv(key_vault_name,"SQLDB-USERNAME")
+password = get_secrets_from_kv(key_vault_name,"SQLDB-PASSWORD")
 
 connection_string = f'DRIVER={{ODBC Driver 18 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
 print(connection_string)
