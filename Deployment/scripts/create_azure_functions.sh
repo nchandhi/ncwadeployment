@@ -19,9 +19,9 @@ sqlDbPwd="$14"
 azureOpenAIDeploymentModel='gpt-4'
 azureOpenAIEmbeddingDeployment='text-embedding-ada-002'
 
-env_name= $solutionName + "env"
-storageAccount= $solutionName + "fnstorage"
-functionappname= $solutionName + "fn"
+env_name=${solutionName}"env"
+storageAccount=${solutionName}"fnstorage"
+functionappname=${solutionName}"fn"
 
 sqlDBConn="DRIVER={ODBC Driver 18 for SQL Server};SERVER="${sqlServerName}".database.windows.net;DATABASE="${sqlDbName}";UID="${sqlDbUser}";PWD="${sqlDbPwd}
 
