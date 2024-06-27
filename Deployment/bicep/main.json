@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "11673850022409886099"
+      "templateHash": "13558800177217579159"
     }
   },
   "parameters": {
@@ -300,7 +300,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "11644507138528991951"
+              "templateHash": "1888263599801958451"
             }
           },
           "parameters": {
@@ -362,7 +362,8 @@
               "location": "[parameters('location')]",
               "properties": {
                 "administratorLogin": "[parameters('administratorLogin')]",
-                "administratorLoginPassword": "[parameters('administratorLoginPassword')]"
+                "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+                "publicNetworkAccess": "Enabled"
               }
             },
             {

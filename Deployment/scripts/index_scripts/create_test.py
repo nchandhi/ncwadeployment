@@ -1,4 +1,4 @@
-key_vault_name = 'nc6236-kv-viqxu6akxno74' #'kv_to-be-replaced'
+key_vault_name = 'nc6262-kv-oulet4itsqhbc' #'kv_to-be-replaced'
 
 import pandas as pd
 import pyodbc
@@ -45,7 +45,7 @@ directory_name = directory
 
 cursor = conn.cursor()
 
-cursor.execute('DROP TABLE Clients')
+cursor.execute('DROP TABLE IF EXISTS Clients')
 conn.commit()
 
 create_client_sql = """CREATE TABLE Clients (
