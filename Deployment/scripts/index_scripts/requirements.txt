@@ -2,6 +2,7 @@ azure-storage-file-datalake
 # langchain
 openai
 pypdf
+pyodbc
 # tiktoken
 azure-identity
 azure-ai-textanalytics
