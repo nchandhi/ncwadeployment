@@ -111,6 +111,28 @@ module uploadFiles 'deploy_upload_files_script.bicep' = {
   }
   dependsOn:[storageAccountModule]
 }
+
+module azureFunctions 'deploy_azure_function_script.bicep' = {
+  name : 'deploy_azure_function_script'
+  params:{
+    solutionName: solutionPrefix
+    solutionLocation: solutionLocation
+    resourceGroupName:resourceGroupName
+    azureOpenAIApiKey:azOpenAI.outputs.openAIOutput.openAPIKey
+    azureOpenAIApiVersion:'2023-07-01-preview'
+    azureOpenAIEndpoint:azOpenAI.outputs.openAIOutput.openAPIEndpoint
+    azureSearchAdminKey:azSearchService.outputs.searchServiceOutput.searchServiceAdminKey
+    azureSearchServiceEndpoint:azSearchService.outputs.searchServiceOutput.searchServiceEndpoint
+    azureSearchIndex:'transcripts_index'
+    sqlServerName:sqlDBModule.outputs.sqlDbOutput.sqlServerName
+    sqlDbName:sqlDBModule.outputs.sqlDbOutput.sqlDbName
+    sqlDbUser:sqlDBModule.outputs.sqlDbOutput.sqlDbUser
+    sqlDbPwd:sqlDBModule.outputs.sqlDbOutput.sqlDbPwd
+    identity:managedIdentityModule.outputs.managedIdentityOutput.id
+    baseUrl:baseUrl
+  }
+  dependsOn:[storageAccountModule]
+}
 // ========== Key Vault ========== //
 
 module keyvaultModule 'deploy_keyvault.bicep' = {
