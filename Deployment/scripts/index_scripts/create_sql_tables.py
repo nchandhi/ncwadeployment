@@ -194,6 +194,7 @@ conn.commit()
 file_path = directory + '/InvestmentGoalsDetails.csv'
 file_client = file_system_client.get_file_client(file_path)
 csv_file = file_client.download_file()
+df = pd.read_csv(csv_file, encoding='utf-8')
 
 df['ClientId'] = df['ClientId'].astype(int)
 
@@ -220,6 +221,7 @@ conn.commit()
 file_path = directory + '/ClientSummaries.csv'
 file_client = file_system_client.get_file_client(file_path)
 csv_file = file_client.download_file()
+df = pd.read_csv(csv_file, encoding='utf-8')
 
 df['ClientId'] = df['ClientId'].astype(int)
 
@@ -248,6 +250,7 @@ conn.commit()
 file_path = directory + '/Retirement.csv'
 file_client = file_system_client.get_file_client(file_path)
 csv_file = file_client.download_file()
+df = pd.read_csv(csv_file, encoding='utf-8')
 
 df['ClientId'] = df['ClientId'].astype(int)
 
