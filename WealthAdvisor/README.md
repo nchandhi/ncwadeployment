@@ -13,29 +13,30 @@ User story
 
 **Solution accelerator overview**
 
-This solution accelerator is a powerful tool that helps you create your own AI assistants. The accelerator can be used by any customer looking for reusable architecture and code snippets to build AI assistants with their own enterprise data. 
+This solution accelerator is a powerful tool that helps you create your own copilots. The accelerator can be used by any customer looking for reusable architecture and code snippets to build custom copilots with their own enterprise data. 
 
-It leverages Azure Open AI Service, Azure AI Search and Microsoft Fabric, to identify relevant documents, summarize and categorize vast amounts of unstructured information, and accelerate the overall document review and content generation process. 
+It leverages Azure Open AI Service, Azure AI Search and Microsoft Fabric, to streamline daily tasks and customer meeting preparation for customer-facing roles. As a result, this helps to improve client retention and customer satisfaction. By increasing employee productivity and improving customer conversations, our solution enables organizations to serve more customers and drive increased revenue for the entire company. 
 
+ 
 **Scenario**
 
-This example focuses on a researcher who wants to explore leading flu vaccine studies and relevant grants to accelerate submission of a grant proposal. 
+A Woodgrove Bank Wealth Advisor is preparing for upcoming client meetings. He wants insight into his scheduled client meetings, access to portfolio information, a comprehensive understanding of previous meetings, and the ability to ask questions about client’s financial details and interests. 
+  
+This sample with an integrated copilot helps Wealth Advisors to save time and prepare relevant discussion topics for scheduled meetings. It provides an overview of daily client meetings with seamless navigation between viewing client profiles and chatting with structured data. Altogether, these features streamline meeting preparation for wealth advisors and result in more productive conversations with clients. 
 
-The assistant helps the researchers find relevant articles and grants available for their research topic easily using a conversational assistant. Researcher can generate different sections of a grant application with a simple button click, then they can refine the prompts and regenerate individual sections to add more details as needed. Finally, the generated grant application can be exported as a PDF or a Microsoft Word document for further processing.
-
-The sample data is sourced from a select set of research published on [PubMed](https://pubmed.ncbi.nlm.nih.gov/), select [NIH](https://www.nih.gov/grants-funding) grant announcements and sample grant applications. The documents are intended for use as sample data only.
+The sample data used in this repository is synthetic and generated using Azure Open AI service. The data is intended for use as sample data only.
 
 <br/>
 
 **Key features**
 
-![Key Features](/Deployment/images/readMe/keyfeatures.png)
+![Key Features](Deployment/images/readMe/keyfeatures.png)
 
 <br/>
 
 **Below is an image of the solution accelerator.**
 
-![Landing Page](/Deployment/images/readMe/landing_page.png)
+![Landing Page](Deployment/images/readMe/landing_page.png)
 
 
 <h2><img src="Deployment/images/readMe/oneClickDeploy.png" width="64">
@@ -55,7 +56,7 @@ For additional training and support, please see:
 4. [Azure AI Studio](https://learn.microsoft.com/en-us/azure/ai-studio/) 
 
 ### Solution accelerator architecture
-![image](/Deployment/images/readMe/architecture.png)
+![image](Deployment/images/readMe/architecture.png)
 
 
  > Note: Some features contained in this repository are in private preview. Certain features might not be supported or might have constrained capabilities. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms).
@@ -68,24 +69,17 @@ https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-regi
 
 2. Click the following deployment button to create the required resources for this accelerator in your Azure Subscription.
 
-   [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FBuild-your-own-AI-Assistant-Solution-Accelerator%2Fmain%2FDeployment%2Fbicep%2Fmain.json)
+   <!-- [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FBuild-your-own-AI-Assistant-Solution-Accelerator%2Fmain%2FDeployment%2Fbicep%2Fmain.json) -->
 
+   [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FWealthAdvisor%2FDeployment%2Fbicep%2Fmain.json)
 
 3. You will need to select an Azure Subscription, create/select a Resource group, Region, and a unique Solution Prefix.
 
-   ![image](/Deployment/images/readMe/armDeployment.png)
+   ![image](Deployment/images/readMe/armDeployment.png)
 
-4. When Deployment is complete, follow steps in [AI Studio Deployment guide](./Deployment/AIStudioDeployment.md) to configure the grant draft proposal endpoint.
+4. When deployment is complete, Follow steps in [Fabric Deployment guide](./Deployment/FabricDeployment.md) to set up the data processing pipelines and Power BI report in Fabric.
 
-5. When AI Studio deployment is complete, launch the application by navigating to your Azure resource group, choosing the app service resource, and clicking on the default domain. You should bookmark this URL to have quick access to your deployed application.
-
-The next steps are optional for additional learning. Not required to deploy the solution and run the Grant Writer Assistant.
-
-6. Optional - Follow steps in [Fabric Deployment guide](./Deployment/FabricDeployment.md) to set up the data processing pipelines in Fabric.
-
-7. Optional - Follow steps in [Promptflow Evaluation guide](./Deployment/PromptFlowEvaluation.md) to set up the evaluation flows.
-
-8. Optional - Follow steps in [Promptflow Safety Evaluation guide](./Deployment/PromptFlowSafetyEvaluation.md) to set up the safety evaluation flows.
+5. When Fabric deployment is complete, launch the application by navigating to your Azure resource group, choosing the app service resource, and clicking on the default domain. You should bookmark this URL to have quick access to your deployed application.
 
 
 <br/>
