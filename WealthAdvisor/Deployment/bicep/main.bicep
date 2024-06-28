@@ -15,7 +15,7 @@ var subscriptionId  = subscription().subscriptionId
 
 var solutionLocation = resourceGroupLocation
 // var baseUrl = 'https://raw.githubusercontent.com/microsoft/Build-your-own-AI-Assistant-Solution-Accelerator/main/'
-var baseUrl = 'https://raw.githubusercontent.com/nchandhi/ncwadeployment/main/'
+var baseUrl = 'https://raw.githubusercontent.com/nchandhi/ncwadeployment/main/WealthAdvisor/'
 
 // ========== Managed Identity ========== //
 module managedIdentityModule 'deploy_managed_identity.bicep' = {
