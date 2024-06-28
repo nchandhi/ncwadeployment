@@ -22,17 +22,17 @@ It leverages Azure Open AI Service, Azure AI Search and Microsoft Fabric, to cre
 Scenarios
 </h2>
 
-#### [Research Assistant](ResearchAssistant/README.md)
+### [Research Assistant](ResearchAssistant/README.md)
 
 The copilot helps the researchers find relevant articles and grants available for their research topic easily using a conversational assistant. Researcher can generate different sections of a grant application with a simple button click, then they can refine the prompts and regenerate individual sections to add more details as needed. Finally, the generated grant application can be exported as a PDF or a Microsoft Word document for further processing.
 
-Click [Research Assistant](ResearchAssistant/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FResearchAssistant%2FDeployment%2Fbicep%2Fmain.json)
+Please navigate to [Research Assistant](ResearchAssistant/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FResearchAssistant%2FDeployment%2Fbicep%2Fmain.json)
 
-#### Wealth Advsior
+### [Wealth Advsior](WealthAdvisor/README.md)
 
 This copilot helps Wealth Advisors to save time and prepare relevant discussion topics for scheduled meetings. It provides an overview of daily client meetings with seamless navigation between viewing client profiles and chatting with structured data. Altogether, these features streamline meeting preparation for wealth advisors and result in more productive conversations with clients.
 
-Click [Wealth Advisor](WealthAdvisor/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FWealthAdvisor%2FDeployment%2Fbicep%2Fmain.json)
+Please navigate to [Wealth Advisor](WealthAdvisor/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FWealthAdvisor%2FDeployment%2Fbicep%2Fmain.json)
 
 <br/>
 <br>
