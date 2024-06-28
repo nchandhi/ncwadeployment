@@ -259,5 +259,3 @@ module appserviceModule 'deploy_app_service.bicep' = {
   scope: resourceGroup(resourceGroup().name)
   dependsOn:[storageAccountModule,azOpenAI,azAIMultiServiceAccount,azSearchService]
 }
-
-     
