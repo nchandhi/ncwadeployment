@@ -16,12 +16,13 @@ sqlDbName="$12"
 sqlDbUser="$13"
 sqlDbPwd="$14"
 
-azureOpenAIDeploymentModel='gpt-4'
-azureOpenAIEmbeddingDeployment='text-embedding-ada-002'
+azureOpenAIDeploymentModel="gpt-4"
+azureOpenAIEmbeddingDeployment="text-embedding-ada-002"
 
 env_name=${solutionName}"env"
 storageAccount=${solutionName}"fnstorage"
 functionappname=${solutionName}"fn"
+valueone="1"
 
 sqlDBConn="DRIVER={ODBC Driver 18 for SQL Server};SERVER="${sqlServerName}".database.windows.net;DATABASE="${sqlDbName}";UID="${sqlDbUser}";PWD="${sqlDbPwd}
 
@@ -34,11 +35,12 @@ az functionapp create --resource-group $resourceGroupName --name $functionappnam
                 --functions-version 4 --runtime python \
                 --image nctestcontainerreg2.azurecr.io/ncazfunctionsimage:v1.0.0
 
-# az functionapp config appsettings set --name $functionappname -g $resourceGroupName \
-#                 --settings AZURE_OPEN_AI_API_KEY=$azureOpenAIApiKey AZURE_OPEN_AI_DEPLOYMENT_MODEL=$azureOpenAIDeploymentModel \
-#                 AZURE_OPEN_AI_ENDPOINT=$azureOpenAIEndpoint AZURE_OPENAI_EMBEDDING_DEPLOYMENT=$azureOpenAIEmbeddingDeployment \
-#                 OPENAI_API_VERSION=$azureOpenAIApiVersion \
-#                 AZURE_AI_SEARCH_API_KEY=$azureOpenAIApiKey AZURE_AI_SEARCH_ENDPOINT=$azureSearchServiceEndpoint \
-#                 AZURE_SEARCH_INDEX=$azureSearchIndex \
-#                 PYTHON_ENABLE_INIT_INDEXING="1" PYTHON_ISOLATE_WORKER_DEPENDENCIES="1" \
-#                 SQLDB_CONNECTION_STRING=$sqlDBConn
+az functionapp config appsettings set --name $functionappname -g $resourceGroupName \
+                --settings AZURE_OPEN_AI_API_KEY=$azureOpenAIApiKey AZURE_OPEN_AI_DEPLOYMENT_MODEL=$azureOpenAIDeploymentModel \
+                AZURE_OPEN_AI_ENDPOINT=$azureOpenAIEndpoint AZURE_OPENAI_EMBEDDING_DEPLOYMENT=$azureOpenAIEmbeddingDeployment \
+                OPENAI_API_VERSION=$azureOpenAIApiVersion \
+                AZURE_AI_SEARCH_API_KEY=$azureOpenAIApiKey AZURE_AI_SEARCH_ENDPOINT=$azureSearchServiceEndpoint \
+                AZURE_SEARCH_INDEX=$azureSearchIndex \
+                PYTHON_ENABLE_INIT_INDEXING=$valueone PYTHON_ISOLATE_WORKER_DEPENDENCIES=$valueone \
+                SQLDB_CONNECTION_STRING=$sqlDBConn \
+                SQLDB_SERVER=$sqlServerName SQLDB_DATABASE=$sqlDbName SQLDB_USERNAME=$sqlDbUser SQLDB_PASSWORD=$sqlDbPwd                
