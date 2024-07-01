@@ -26,7 +26,8 @@ valueone="1"
 
 # sqlDBConn="DRIVER={ODBC Driver 18 for SQL Server};SERVER="${sqlServerName}".database.windows.net;DATABASE="${sqlDbName}";UID="${sqlDbUser}";PWD="${sqlDbPwd}
 
-sqlDBConn="DRIVER={ODBC Driver 18 for SQL Server};SERVER=${sqlServerName}.database.windows.net;DATABASE=${sqlDbName};UID=${sqlDbUser};PWD=${sqlDbPwd}"
+# sqlDBConn="DRIVER={ODBC Driver 18 for SQL Server};SERVER=${sqlServerName}.database.windows.net;DATABASE=${sqlDbName};UID=${sqlDbUser};PWD=${sqlDbPwd}"
+sqlDBConn="TBD"
 
 az containerapp env create --name $env_name --enable-workload-profiles --resource-group $resourceGroupName --location $solutionLocation
 
