@@ -10,11 +10,11 @@ azureOpenAIApiVersion="$6"
 azureOpenAIEndpoint="$7"
 azureSearchAdminKey="$8"
 azureSearchServiceEndpoint="$9"
-azureSearchIndex="$10"
-sqlServerName="$11"
-sqlDbName="$12"
-sqlDbUser="$13"
-sqlDbPwd="$14"
+azureSearchIndex="${10}"
+sqlServerName="${11}"
+sqlDbName="${12}"
+sqlDbUser="${13}"
+sqlDbPwd="${14}"
 
 azureOpenAIDeploymentModel="gpt-4"
 azureOpenAIEmbeddingDeployment="text-embedding-ada-002"
@@ -26,7 +26,7 @@ valueone="1"
 
 # sqlDBConn="DRIVER={ODBC Driver 18 for SQL Server};SERVER="${sqlServerName}".database.windows.net;DATABASE="${sqlDbName}";UID="${sqlDbUser}";PWD="${sqlDbPwd}
 
-# sqlDBConn="DRIVER={ODBC Driver 18 for SQL Server};SERVER=${sqlServerName}.database.windows.net;DATABASE=${sqlDbName};UID=${sqlDbUser};PWD=${sqlDbPwd}"
+#sqlDBConn="DRIVER={ODBC Driver 18 for SQL Server};SERVER=${sqlServerName}.database.windows.net;DATABASE=${sqlDbName};UID=${sqlDbUser};PWD=${sqlDbPwd}"
 sqlDBConn="TBD"
 
 az containerapp env create --name $env_name --enable-workload-profiles --resource-group $resourceGroupName --location $solutionLocation
