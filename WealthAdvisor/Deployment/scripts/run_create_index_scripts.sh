@@ -14,7 +14,7 @@ curl --output "create_search_index.py" ${baseUrl}"Deployment/scripts/index_scrip
 curl --output "create_sql_tables.py" ${baseUrl}"Deployment/scripts/index_scripts/create_sql_tables.py"
 
 sudo apt-get update
-RUN apt-get install -y unixodbc-dev unixodbc
+RUN apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
 
 # Download the requirement file
 curl --output "$requirementFile" "$requirementFileUrl"
