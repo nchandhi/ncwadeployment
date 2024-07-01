@@ -13,8 +13,9 @@ echo "Script Started"
 curl --output "create_search_index.py" ${baseUrl}"Deployment/scripts/index_scripts/create_search_index.py"
 curl --output "create_sql_tables.py" ${baseUrl}"Deployment/scripts/index_scripts/create_sql_tables.py"
 
-RUN apt-get update
-RUN apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
+# RUN apt-get update
+# RUN apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
+apt install gcc python3-dev python3-pip libxml2-dev libxslt1-dev zlib1g-dev g++
 
 # Download the requirement file
 curl --output "$requirementFile" "$requirementFileUrl"
