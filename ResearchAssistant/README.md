@@ -29,13 +29,13 @@ The sample data is sourced from a select set of research published on [PubMed](h
 
 **Key features**
 
-![Key Features](/Deployment/images/readMe/keyfeatures.png)
+![Key Features](Deployment/images/readMe/keyfeatures.png)
 
 <br/>
 
 **Below is an image of the solution accelerator.**
 
-![Landing Page](/Deployment/images/readMe/landing_page.png)
+![Landing Page](Deployment/images/readMe/landing_page.png)
 
 
 <h2><img src="Deployment/images/readMe/oneClickDeploy.png" width="64">
@@ -55,7 +55,7 @@ For additional training and support, please see:
 4. [Azure AI Studio](https://learn.microsoft.com/en-us/azure/ai-studio/) 
 
 ### Solution accelerator architecture
-![image](/Deployment/images/readMe/architecture.png)
+![image](Deployment/images/readMe/architecture.png)
 
 
  > Note: Some features contained in this repository are in private preview. Certain features might not be supported or might have constrained capabilities. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms).
@@ -73,7 +73,7 @@ https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-regi
 
 3. You will need to select an Azure Subscription, create/select a Resource group, Region, and a unique Solution Prefix.
 
-   ![image](/Deployment/images/readMe/armDeployment.png)
+   ![image](Deployment/images/readMe/armDeployment.png)
 
 4. When Deployment is complete, follow steps in [AI Studio Deployment guide](./Deployment/AIStudioDeployment.md) to configure the grant draft proposal endpoint.
 
