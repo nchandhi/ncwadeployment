@@ -21,14 +21,14 @@ param administratorLogin string = 'sqladmin'
 @secure()
 param administratorLoginPassword string = 'TestPassword_1234'
 
-resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
+resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: serverName
   location: location
   properties: {
     administratorLogin: administratorLogin
     administratorLoginPassword: administratorLoginPassword
     publicNetworkAccess: 'Enabled'
-  }
+    }
 }
 
 resource sqlDB 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {

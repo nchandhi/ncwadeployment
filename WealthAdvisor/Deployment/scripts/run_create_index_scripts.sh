@@ -13,6 +13,8 @@ echo "Script Started"
 curl --output "create_search_index.py" ${baseUrl}"Deployment/scripts/index_scripts/create_search_index.py"
 curl --output "create_sql_tables.py" ${baseUrl}"Deployment/scripts/index_scripts/create_sql_tables.py"
 
+sudo apt-get update
+RUN apt-get install -y unixodbc-dev unixodbc
 
 # Download the requirement file
 curl --output "$requirementFile" "$requirementFileUrl"
