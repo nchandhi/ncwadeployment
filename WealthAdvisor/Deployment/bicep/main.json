@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "10238350447091451178"
+      "templateHash": "1759910149840327451"
     }
   },
   "parameters": {
@@ -300,7 +300,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "14064911665258258922"
+              "templateHash": "16633611562938626104"
             }
           },
           "parameters": {
@@ -365,6 +365,18 @@
                 "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
                 "publicNetworkAccess": "Enabled"
               }
+            },
+            {
+              "type": "Microsoft.Sql/servers/firewallRules",
+              "apiVersion": "2022-02-01-preview",
+              "name": "[format('{0}/{1}', parameters('serverName'), 'AllowSpecificRange')]",
+              "properties": {
+                "startIpAddress": "0.0.0.0",
+                "endIpAddress": "255.255.255.255"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+              ]
             },
             {
               "type": "Microsoft.Sql/servers/databases",

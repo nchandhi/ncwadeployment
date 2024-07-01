@@ -25,10 +25,19 @@ resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: serverName
   location: location
   properties: {
-    administratorLogin: administratorLogin
-    administratorLoginPassword: administratorLoginPassword
-    publicNetworkAccess: 'Enabled'
+      administratorLogin: administratorLogin
+      administratorLoginPassword: administratorLoginPassword
+      publicNetworkAccess: 'Enabled'
     }
+}
+
+resource firewallRule 'Microsoft.Sql/servers/firewallRules@2022-02-01-preview' = {
+  name: 'AllowSpecificRange'
+  parent: sqlServer
+  properties: {
+    startIpAddress: '0.0.0.0'
+    endIpAddress: '255.255.255.255'
+  }
 }
 
 resource sqlDB 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
@@ -40,6 +49,7 @@ resource sqlDB 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
     tier: 'Standard'
   }
 }
+
 
 output sqlDbOutput object = {
   sqlServerName: '${serverName}.database.windows.net' 
