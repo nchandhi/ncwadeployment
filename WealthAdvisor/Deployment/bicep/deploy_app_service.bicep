@@ -137,29 +137,28 @@ param AzureOpenAIEmbeddingEndpoint string = ''
 @description('Enable chat history by deploying a Cosmos DB instance')
 param WebAppEnableChatHistory string = 'False'
 
+@description('Use Azure Function')
+param USE_AZUREFUNCTION string = 'True'
 
-@description('Azure AI Studio Chat Flow Endpoint')
-param AIStudioChatFlowEndpoint string = ''
+@description('Azure Function Endpoint')
+param STREAMING_AZUREFUNCTION_ENDPOINT string = ''
 
-@description('Azure AI Studio Chat Flow Key')
-param AIStudioChatFlowAPIKey string = ''
+@description('SQL Database Connection String')
+@secure()
+param SQLDB_CONNECTION_STRING string = ''
 
+@description('SQL Database Server Name')
+param SQLDB_SERVER string = ''
 
-@description('Azure AI Studio Chat Flow Deployment Name')
-param AIStudioChatFlowDeploymentName string = ''
+@description('SQL Database Name')
+param SQLDB_DATABASE string = ''
 
-@description('Azure AI Studio Draft Flow Endpoint')
-param AIStudioDraftFlowEndpoint string = ''
+@description('SQL Database Username')
+param SQLDB_USERNAME string = ''
 
-
-@description('Azure AI Studio Draft Flow Key')
-param AIStudioDraftFlowAPIKey string = ''
-
-@description('Azure AI Studio Draft Flow Deployment Name')
-param AIStudioDraftFlowDeploymentName string = ''
-
-@description('Use Azure AI Studio')
-param AIStudioUse string = 'False'
+@description('SQL Database Password')
+@secure()
+param SQLDB_PASSWORD string = ''
 
 
 // var WebAppImageName = 'DOCKER|byoaiacontainer.azurecr.io/byoaia-app:latest'
@@ -337,39 +336,32 @@ resource Website 'Microsoft.Web/sites@2020-06-01' = {
           value: WebAppEnableChatHistory
         }
 
-        // {
-        //   name: 'AI_STUDIO_CHAT_FLOW_ENDPOINT'
-        //   value: AIStudioChatFlowEndpoint
-        // }
-
-        // {
-        //   name: 'AI_STUDIO_CHAT_FLOW_API_KEY'
-        //   value: AIStudioChatFlowAPIKey
-        // }
-
-        // {
-        //   name: 'AI_STUDIO_CHAT_FLOW_DEPLOYMENT_NAME'
-        //   value: AIStudioChatFlowDeploymentName
-        // }
-
-        {
-          name: 'AI_STUDIO_DRAFT_FLOW_ENDPOINT'
-          value: AIStudioDraftFlowEndpoint
+        {name: 'SQLDB_CONNECTION_STRING'
+          value: SQLDB_CONNECTION_STRING
         }
 
-        {
-          name: 'AI_STUDIO_DRAFT_FLOW_API_KEY'
-          value: AIStudioDraftFlowAPIKey
+        {name: 'SQLDB_SERVER'
+          value: SQLDB_SERVER
         }
 
-        {
-          name: 'AI_STUDIO_DRAFT_FLOW_DEPLOYMENT_NAME'
-          value: AIStudioDraftFlowDeploymentName
+        {name: 'SQLDB_DATABASE'
+          value: SQLDB_DATABASE
         }
- 
-        {
-          name: 'USE_AZURE_AI_STUDIO'
-          value: AIStudioUse
+
+        {name: 'SQLDB_USERNAME'
+          value: SQLDB_USERNAME
+        }
+
+        {name: 'SQLDB_PASSWORD'
+          value: SQLDB_PASSWORD
+        }
+
+        {name: 'USE_AZUREFUNCTION'
+          value: USE_AZUREFUNCTION
+        }
+
+        {name: 'STREAMING_AZUREFUNCTION_ENDPOINT'
+          value: STREAMING_AZUREFUNCTION_ENDPOINT
         }
 
         {

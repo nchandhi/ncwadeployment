@@ -49,16 +49,6 @@ module sqlDBModule 'deploy_sql_db.bicep' = {
   scope: resourceGroup(resourceGroup().name)
 }
 
-// module createAzureFunctions 'deploy_azure_functions.bicep' = {
-//   name : 'deploy_azure_functions'
-//   params:{
-//     storageAccountName:storageAccountModule.outputs.storageAccountOutput.name
-//     solutionLocation: solutionLocation
-//     identity:managedIdentityModule.outputs.managedIdentityOutput.id
-//     baseUrl:baseUrl
-//   }
-//   dependsOn:[storageAccountModule]
-// }
 // ========== Key Vault ========== //
 
 // module createFabricItems 'deploy_fabric_scripts.bicep' = if (fabricWorkspaceId != '') {
@@ -234,20 +224,20 @@ module appserviceModule 'deploy_app_service.bicep' = {
     AzureOpenAISystemMessage:'''You are a helpful Wealth Advisor assistant''' 
     AzureOpenAIApiVersion:'2023-12-01-preview'
     AzureOpenAIStream:'True'
-    AzureSearchQueryType:'vectorSemanticHybrid'
-    AzureSearchVectorFields:'titleVector,contentVector'
+    AzureSearchQueryType:'vectorSimpleHybrid'
+    AzureSearchVectorFields:'contentVector'
     AzureSearchPermittedGroupsField:''
     AzureSearchStrictness:'3'
     AzureOpenAIEmbeddingName:'text-embedding-ada-002'
     AzureOpenAIEmbeddingkey:azOpenAI.outputs.openAIOutput.openAPIKey
     AzureOpenAIEmbeddingEndpoint:azOpenAI.outputs.openAIOutput.openAPIEndpoint
-    AIStudioChatFlowEndpoint:'TBD'
-    AIStudioChatFlowAPIKey:'TBD'
-    AIStudioChatFlowDeploymentName:'TBD'
-    AIStudioDraftFlowEndpoint:'TBD'
-    AIStudioDraftFlowAPIKey:'TBD'
-    AIStudioDraftFlowDeploymentName:'TBD'
-    AIStudioUse:'False'
+    USE_AZUREFUNCTION:'True'
+    STREAMING_AZUREFUNCTION_ENDPOINT:'TBD'
+    SQLDB_CONNECTION_STRING:'TBD'
+    SQLDB_SERVER:sqlDBModule.outputs.sqlDbOutput.sqlServerName
+    SQLDB_DATABASE:sqlDBModule.outputs.sqlDbOutput.sqlDbName
+    SQLDB_USERNAME:sqlDBModule.outputs.sqlDbOutput.sqlDbUser
+    SQLDB_PASSWORD:sqlDBModule.outputs.sqlDbOutput.sqlDbPwd
   }
   scope: resourceGroup(resourceGroup().name)
   dependsOn:[storageAccountModule,azOpenAI,azAIMultiServiceAccount,azSearchService]

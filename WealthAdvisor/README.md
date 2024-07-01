@@ -79,11 +79,8 @@ https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-regi
 
 4. When deployment is complete, Follow steps in [Fabric Deployment guide](./Deployment/FabricDeployment.md) to set up the data processing pipelines and Power BI report in Fabric.
 
-5. After Fabric deployment is complete, update the Environment configuration of the app to update PowerBI URL. Launch the application by navigating to your Azure resource group, choosing the app service resource, and clicking on the default domain. You should bookmark this URL to have quick access to your deployed application.
+5. Follow steps in [Teams Tab App guide](./Deployment/TeamsAppDeployment.md) to add the Wealth Advisor app to Microsoft Teams.
 
-6. Follow steps in [Teams Tab App guide](./Deployment/TeamsAppDeployment.md) to add the Wealth Advisor app to Microsoft Teams.
-
-<screenshot>
 
 <br/>
 <br>
