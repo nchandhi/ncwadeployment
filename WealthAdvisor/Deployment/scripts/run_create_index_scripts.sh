@@ -13,7 +13,7 @@ echo "Script Started"
 curl --output "create_search_index.py" ${baseUrl}"Deployment/scripts/index_scripts/create_search_index.py"
 curl --output "create_sql_tables.py" ${baseUrl}"Deployment/scripts/index_scripts/create_sql_tables.py"
 
-sudo apt-get update
+RUN apt-get update
 RUN apt-get install python3 python3-dev g++ unixodbc-dev unixodbc libpq-dev
 
 # Download the requirement file
