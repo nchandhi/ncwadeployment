@@ -1,4 +1,4 @@
-key_vault_name = 'kv_to-be-replaced'
+key_vault_name = 'nc6211-kv-isgqgxlmv6y5k' #'kv_to-be-replaced'
 
 import pandas as pd
 import pymssql
@@ -209,6 +209,60 @@ conn.commit()
 # cursor.execute(f"select * from InvestmentGoalsDetails")
 # for row in cursor.fetchall():
 #     print(row.ClientId,row.InvestmentGoal)
+
+
+import pandas as pd
+cursor = conn.cursor()
+
+cursor.execute('DROP TABLE IF EXISTS ClientMeetings')
+conn.commit()
+
+create_cs_sql = """CREATE TABLE ClientMeetings (
+                ClientId int NOT NULL,
+                ConversationId nvarchar(255),
+                Title nvarchar(255),
+                StartTime DateTime,
+                EndTime DateTime,
+                Advisor nvarchar(255),
+                ClientEmail nvarchar(255)
+            );"""
+
+cursor.execute(create_cs_sql)
+conn.commit()
+
+# df = pd.read_csv('../Data/ClientMeetingsMetadata.csv')
+# df['ClientId'] = df['ClientId'].astype(int)
+
+file_path = directory + '/ClientMeetingsMetadata.csv'
+file_client = file_system_client.get_file_client(file_path)
+csv_file = file_client.download_file()
+df = pd.read_csv(csv_file, encoding='utf-8')
+
+for index, item in df.iterrows():
+    # cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (?,?,?,?,?,?,?)", item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail)
+    cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (%s,%s,%s,%s,%s,%s,%s)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
+conn.commit()
+
+
+# df = pd.read_csv('../Data/ClientFutureMeetings.csv')
+
+file_path = directory + '/ClientFutureMeetings.csv'
+file_client = file_system_client.get_file_client(file_path)
+csv_file = file_client.download_file()
+df = pd.read_csv(csv_file, encoding='utf-8')
+
+df['ClientId'] = df['ClientId'].astype(int)
+df['ConversationId'] = ''
+
+for index, item in df.iterrows():
+    #cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (?,?,?,?,?,?,?)", item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail)
+    cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (%s,%s,%s,%s,%s,%s,%s)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
+conn.commit()
+
+# cursor.execute(f"select * from ClientMeetings")
+# for row in cursor.fetchall():
+#     print(row)
+#     break
 
 cursor.execute('DROP TABLE IF EXISTS ClientSummaries')
 conn.commit()

@@ -21,20 +21,17 @@ param administratorLogin string = 'sqladmin'
 @secure()
 param administratorLoginPassword string = 'TestPassword_1234'
 
-resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
+resource sqlServer 'Microsoft.Sql/servers@2023-05-01-preview' = {
   name: serverName
   location: location
-  kind:'v12.0'
   properties: {
       administratorLogin: administratorLogin
       administratorLoginPassword: administratorLoginPassword
       publicNetworkAccess: 'Enabled'
-      version: '12.0'
-      restrictOutboundNetworkAccess: 'Disabled'
     }
 }
 
-resource firewallRule 'Microsoft.Sql/servers/firewallRules@2023-08-01-preview' = {
+resource firewallRule 'Microsoft.Sql/servers/firewallRules@2022-02-01-preview' = {
   name: 'AllowSpecificRange'
   parent: sqlServer
   properties: {
@@ -43,34 +40,16 @@ resource firewallRule 'Microsoft.Sql/servers/firewallRules@2023-08-01-preview' =
   }
 }
 
-resource AllowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRules@2023-08-01-preview' = {
-  name: 'AllowAllWindowsAzureIps'
-  parent: sqlServer
-  properties: {
-    startIpAddress: '0.0.0.0'
-    endIpAddress: '0.0.0.0'
-  }
-}
-
-resource sqlDB 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
+resource sqlDB 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
   parent: sqlServer
   name: sqlDBName
   location: location
   sku: {
-    name: 'GP_S_Gen5'
-    tier: 'GeneralPurpose'
-    family: 'Gen5'
-    capacity: 2
-  }
-  kind:'v12.0,user,vcore,serverless'
-  properties: {
-    collation: 'SQL_Latin1_General_CP1_CI_AS'
-    autoPauseDelay:30
-    minCapacity:1
-    readScale: 'Disabled'
-    zoneRedundant: false
+    name: 'Standard'
+    tier: 'Standard'
   }
 }
+
 
 output sqlDbOutput object = {
   sqlServerName: '${serverName}.database.windows.net' 
