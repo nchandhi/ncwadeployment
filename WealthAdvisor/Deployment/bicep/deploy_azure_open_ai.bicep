@@ -78,27 +78,26 @@ resource accounts_byc_openai_name_gpt_4o 'Microsoft.CognitiveServices/accounts/d
     versionUpgradeOption: 'OnceCurrentVersionExpired'
     raiPolicyName: 'Microsoft.Default'
   }
-  dependsOn:[accounts_byc_openai_name_resource]
 }
 
-// resource accounts_byc_openai_name_text_embedding_ada_002 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
-//   parent: accounts_byc_openai_name_resource
-//   name: 'text-embedding-ada-002'
-//   sku: {
-//     name: 'Standard'
-//     capacity: 45
-//   }
-//   properties: {
-//     model: {
-//       format: 'OpenAI'
-//       name: 'text-embedding-ada-002'
-//       version: '2'
-//     }
-//     versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
-//     raiPolicyName: 'Microsoft.Default'
-//   }
-//   dependsOn:[accounts_byc_openai_name_resource,accounts_byc_openai_name_gpt_35_turbo]
-// }
+resource accounts_byc_openai_name_text_embedding_ada_002 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
+  parent: accounts_byc_openai_name_resource
+  name: 'text-embedding-ada-002'
+  sku: {
+    name: 'Standard'
+    capacity: 45
+  }
+  properties: {
+    model: {
+      format: 'OpenAI'
+      name: 'text-embedding-ada-002'
+      version: '2'
+    }
+    versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
+    raiPolicyName: 'Microsoft.Default'
+  }
+  dependsOn:[accounts_byc_openai_name_gpt_4o]
+}
 
 var openaiKey = accounts_byc_openai_name_resource.listKeys().key1
 
