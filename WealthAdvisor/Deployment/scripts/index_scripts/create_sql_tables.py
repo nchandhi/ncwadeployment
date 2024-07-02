@@ -3,6 +3,7 @@ key_vault_name = 'kv_to-be-replaced'
 import pandas as pd
 import pymssql
 import os
+from datetime import datetime
 
 from azure.keyvault.secrets import SecretClient  
 from azure.identity import DefaultAzureCredential 
@@ -211,59 +212,6 @@ conn.commit()
 #     print(row.ClientId,row.InvestmentGoal)
 
 
-import pandas as pd
-cursor = conn.cursor()
-
-cursor.execute('DROP TABLE IF EXISTS ClientMeetings')
-conn.commit()
-
-create_cs_sql = """CREATE TABLE ClientMeetings (
-                ClientId int NOT NULL,
-                ConversationId nvarchar(255),
-                Title nvarchar(255),
-                StartTime DateTime,
-                EndTime DateTime,
-                Advisor nvarchar(255),
-                ClientEmail nvarchar(255)
-            );"""
-
-cursor.execute(create_cs_sql)
-conn.commit()
-
-# df = pd.read_csv('../Data/ClientMeetingsMetadata.csv')
-# df['ClientId'] = df['ClientId'].astype(int)
-
-file_path = directory + '/ClientMeetingsMetadata.csv'
-file_client = file_system_client.get_file_client(file_path)
-csv_file = file_client.download_file()
-df = pd.read_csv(csv_file, encoding='utf-8')
-
-for index, item in df.iterrows():
-    # cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (?,?,?,?,?,?,?)", item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail)
-    cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (%s,%s,%s,%s,%s,%s,%s)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
-conn.commit()
-
-
-# df = pd.read_csv('../Data/ClientFutureMeetings.csv')
-
-file_path = directory + '/ClientFutureMeetings.csv'
-file_client = file_system_client.get_file_client(file_path)
-csv_file = file_client.download_file()
-df = pd.read_csv(csv_file, encoding='utf-8')
-
-df['ClientId'] = df['ClientId'].astype(int)
-df['ConversationId'] = ''
-
-for index, item in df.iterrows():
-    #cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (?,?,?,?,?,?,?)", item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail)
-    cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (%s,%s,%s,%s,%s,%s,%s)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
-conn.commit()
-
-# cursor.execute(f"select * from ClientMeetings")
-# for row in cursor.fetchall():
-#     print(row)
-#     break
-
 cursor.execute('DROP TABLE IF EXISTS ClientSummaries')
 conn.commit()
 
@@ -324,17 +272,89 @@ conn.commit()
 #     print(row.ClientId,row.RetirementGoalProgress)
 
 
-# to adjust dates in meetings table
+import pandas as pd
 cursor = conn.cursor()
-sql_query = 'select 8 - datediff(day,getdate(), max(cast([StartTime] as date))) as n FROM ClientMeetings'
-cursor.execute(sql_query)
-for row in cursor.fetchall():
-    # ndays = row.n
-    ndays = row[0]
-    break
 
-sql_query = f'UPDATE ClientMeetings SET StartTime = DATEADD (day, {ndays}, StartTime)'
-cursor.execute(sql_query)
-sql_query = f'UPDATE ClientMeetings SET EndTime = DATEADD (day, {ndays}, EndTime)'
-cursor.execute(sql_query)
+cursor.execute('DROP TABLE IF EXISTS ClientMeetings')
 conn.commit()
+
+create_cs_sql = """CREATE TABLE ClientMeetings (
+                ClientId int NOT NULL,
+                ConversationId nvarchar(255),
+                Title nvarchar(255),
+                StartTime DateTime,
+                EndTime DateTime,
+                Advisor nvarchar(255),
+                ClientEmail nvarchar(255)
+            );"""
+
+cursor.execute(create_cs_sql)
+conn.commit()
+
+# df = pd.read_csv('../Data/ClientMeetingsMetadata.csv')
+# df['ClientId'] = df['ClientId'].astype(int)
+
+file_path = directory + '/ClientMeetingsMetadata.csv'
+file_client = file_system_client.get_file_client(file_path)
+csv_file = file_client.download_file()
+df = pd.read_csv(csv_file, encoding='utf-8')
+
+# to adjust the dates to current date
+df['StartTime'] = pd.to_datetime(df['StartTime'])
+df['EndTime'] = pd.to_datetime(df['EndTime'])
+today = datetime.today()
+days_difference = (today - min(df['StartTime'])).days - 30
+days_difference
+
+df['StartTime'] = df['StartTime'] + pd.Timedelta(days=days_difference)
+df['EndTime'] = df['EndTime'] + pd.Timedelta(days=days_difference)
+
+for index, item in df.iterrows():
+    # cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (?,?,?,?,?,?,?)", item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail)
+    cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (%s,%s,%s,%s,%s,%s,%s)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
+conn.commit()
+
+
+# df = pd.read_csv('../Data/ClientFutureMeetings.csv')
+
+file_path = directory + '/ClientFutureMeetings.csv'
+file_client = file_system_client.get_file_client(file_path)
+csv_file = file_client.download_file()
+df = pd.read_csv(csv_file, encoding='utf-8')
+
+# to adjust the dates to current date
+df['StartTime'] = pd.to_datetime(df['StartTime'])
+df['EndTime'] = pd.to_datetime(df['EndTime'])
+today = datetime.today()
+days_difference = (today - min(df['StartTime'])).days + 1
+df['StartTime'] = df['StartTime'] + pd.Timedelta(days=days_difference)
+df['EndTime'] = df['EndTime'] + pd.Timedelta(days=days_difference)
+
+df['ClientId'] = df['ClientId'].astype(int)
+df['ConversationId'] = ''
+
+for index, item in df.iterrows():
+    #cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (?,?,?,?,?,?,?)", item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail)
+    cursor.execute(f"INSERT INTO ClientMeetings (ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail) VALUES (%s,%s,%s,%s,%s,%s,%s)", (item.ClientId, item.ConversationId, item.Title, item.StartTime, item.EndTime, item.Advisor, item.ClientEmail))
+conn.commit()
+
+# cursor.execute(f"select * from ClientMeetings")
+# for row in cursor.fetchall():
+#     print(row)
+#     break
+
+
+# # to adjust dates in meetings table - old code delete
+# cursor = conn.cursor()
+# sql_query = 'select 8 - datediff(day,getdate(), max(cast([StartTime] as date))) as n FROM ClientMeetings'
+# cursor.execute(sql_query)
+# for row in cursor.fetchall():
+#     # ndays = row.n
+#     ndays = row[0]
+#     break
+
+# sql_query = f'UPDATE ClientMeetings SET StartTime = DATEADD (day, {ndays}, StartTime)'
+# cursor.execute(sql_query)
+# sql_query = f'UPDATE ClientMeetings SET EndTime = DATEADD (day, {ndays}, EndTime)'
+# cursor.execute(sql_query)
+# conn.commit()
