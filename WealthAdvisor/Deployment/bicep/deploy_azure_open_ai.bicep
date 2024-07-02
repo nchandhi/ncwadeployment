@@ -43,6 +43,44 @@ resource accounts_byc_openai_name_gpt_35_turbo 'Microsoft.CognitiveServices/acco
   dependsOn:[accounts_byc_openai_name_resource]
 }
 
+resource accounts_byc_openai_name_gpt_4 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
+  parent: accounts_byc_openai_name_resource
+  name: 'gpt-4'
+  sku: {
+    name: 'Standard'
+    capacity: 5
+  }
+  properties: {
+    model: {
+      format: 'OpenAI'
+      name: 'gpt-4'
+      version: '0125-Preview'
+    }
+    versionUpgradeOption: 'OnceCurrentVersionExpired'
+    raiPolicyName: 'Microsoft.Default'
+  }
+  dependsOn:[accounts_byc_openai_name_resource]
+}
+
+resource accounts_byc_openai_name_gpt_4o 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
+  parent: accounts_byc_openai_name_resource
+  name: 'gpt-4o'
+  sku: {
+    name: 'GlobalStandard'
+    capacity: 30
+  }
+  properties: {
+    model: {
+      format: 'OpenAI'
+      name: 'gpt-4o'
+      version: '2024-05-13'
+    }
+    versionUpgradeOption: 'OnceCurrentVersionExpired'
+    raiPolicyName: 'Microsoft.Default'
+  }
+  dependsOn:[accounts_byc_openai_name_resource]
+}
+
 resource accounts_byc_openai_name_text_embedding_ada_002 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
   parent: accounts_byc_openai_name_resource
   name: 'text-embedding-ada-002'

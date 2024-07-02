@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "9572815524551035193"
+      "templateHash": "16054093320041561864"
     }
   },
   "parameters": {
@@ -628,7 +628,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "13610803230901662645"
+              "templateHash": "15230230340613251282"
             }
           },
           "parameters": {
@@ -683,6 +683,48 @@
                   "version": "0613"
                 },
                 "versionUpgradeOption": "OnceNewDefaultVersionAvailable",
+                "raiPolicyName": "Microsoft.Default"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_byc_openai_name'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.CognitiveServices/accounts/deployments",
+              "apiVersion": "2023-05-01",
+              "name": "[format('{0}/{1}', parameters('accounts_byc_openai_name'), 'gpt-4')]",
+              "sku": {
+                "name": "Standard",
+                "capacity": 5
+              },
+              "properties": {
+                "model": {
+                  "format": "OpenAI",
+                  "name": "gpt-4",
+                  "version": "0125-Preview"
+                },
+                "versionUpgradeOption": "OnceCurrentVersionExpired",
+                "raiPolicyName": "Microsoft.Default"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_byc_openai_name'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.CognitiveServices/accounts/deployments",
+              "apiVersion": "2023-05-01",
+              "name": "[format('{0}/{1}', parameters('accounts_byc_openai_name'), 'gpt-4o')]",
+              "sku": {
+                "name": "GlobalStandard",
+                "capacity": 30
+              },
+              "properties": {
+                "model": {
+                  "format": "OpenAI",
+                  "name": "gpt-4o",
+                  "version": "2024-05-13"
+                },
+                "versionUpgradeOption": "OnceCurrentVersionExpired",
                 "raiPolicyName": "Microsoft.Default"
               },
               "dependsOn": [

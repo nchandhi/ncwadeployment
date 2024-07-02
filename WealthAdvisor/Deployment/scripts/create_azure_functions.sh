@@ -16,7 +16,7 @@ sqlDbName="${12}"
 sqlDbUser="${13}"
 sqlDbPwd="${14}"
 
-azureOpenAIDeploymentModel="gpt-4"
+azureOpenAIDeploymentModel="gpt-4o"
 azureOpenAIEmbeddingDeployment="text-embedding-ada-002"
 
 env_name=${solutionName}"env"
