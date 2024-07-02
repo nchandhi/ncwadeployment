@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "5937529293241669022"
+      "templateHash": "9256153811742272959"
     }
   },
   "parameters": {
@@ -881,7 +881,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "5117357781685436136"
+              "templateHash": "15471595596970752245"
             }
           },
           "parameters": {
@@ -936,121 +936,29 @@
           },
           "variables": {
             "functionAppName": "[format('{0}fn', parameters('solutionName'))]",
-            "functionName": "askai",
-            "storageAccountName": "[format('{0}fnstorage', parameters('solutionName'))]",
-            "appServicePlanName": "[format('{0}fnasp', parameters('solutionName'))]",
-            "containerRegistryName": "bycwacontainer",
-            "containerImage": "wafunctionimage:v1.0.0",
-            "registryResourceGroup": "byoaia-official",
-            "valueone": 1
+            "functionName": "askai"
           },
           "resources": [
             {
-              "type": "Microsoft.Storage/storageAccounts",
-              "apiVersion": "2022-09-01",
-              "name": "[variables('storageAccountName')]",
+              "type": "Microsoft.Resources/deploymentScripts",
+              "apiVersion": "2020-10-01",
+              "name": "deploy_azure_function",
+              "kind": "AzureCLI",
               "location": "[parameters('solutionLocation')]",
-              "sku": {
-                "name": "Standard_LRS"
-              },
-              "kind": "StorageV2"
-            },
-            {
-              "type": "Microsoft.Web/serverfarms",
-              "apiVersion": "2022-03-01",
-              "name": "[variables('appServicePlanName')]",
-              "location": "[parameters('solutionLocation')]",
-              "sku": {
-                "name": "Y1",
-                "tier": "Dynamic"
-              }
-            },
-            {
-              "type": "Microsoft.Web/sites",
-              "apiVersion": "2022-03-01",
-              "name": "[variables('functionAppName')]",
-              "location": "[parameters('solutionLocation')]",
-              "kind": "functionapp,linux,container",
-              "properties": {
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
-                "siteConfig": {
-                  "appSettings": [
-                    {
-                      "name": "AzureWebJobsStorage",
-                      "value": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2022-09-01').primaryEndpoints.blob]"
-                    },
-                    {
-                      "name": "FUNCTIONS_EXTENSION_VERSION",
-                      "value": "~4"
-                    },
-                    {
-                      "name": "DOCKER_REGISTRY_SERVER_URL",
-                      "value": "[format('https://{0}.azurecr.io', variables('containerRegistryName'))]"
-                    },
-                    {
-                      "name": "AZURE_AI_SEARCH_API_KEY",
-                      "value": "[parameters('azureSearchAdminKey')]"
-                    },
-                    {
-                      "name": "AZURE_AI_SEARCH_ENDPOINT",
-                      "value": "[parameters('azureSearchServiceEndpoint')]"
-                    },
-                    {
-                      "name": "AZURE_OPEN_AI_API_KEY",
-                      "value": "[parameters('azureOpenAIApiKey')]"
-                    },
-                    {
-                      "name": "AZURE_OPEN_AI_DEPLOYMENT_MODEL",
-                      "value": "gpt-4o"
-                    },
-                    {
-                      "name": "AZURE_OPEN_AI_ENDPOINT",
-                      "value": "[parameters('azureOpenAIEndpoint')]"
-                    },
-                    {
-                      "name": "AZURE_OPENAI_EMBEDDING_DEPLOYMENT",
-                      "value": "text-embedding-ada-002"
-                    },
-                    {
-                      "name": "AZURE_SEARCH_INDEX",
-                      "value": "transcripts_index"
-                    },
-                    {
-                      "name": "OPENAI_API_VERSION",
-                      "value": "2024-02-15-preview"
-                    },
-                    {
-                      "name": "PYTHON_ENABLE_INIT_INDEXING",
-                      "value": "1"
-                    },
-                    {
-                      "name": "PYTHON_ISOLATE_WORKER_DEPENDENCIES",
-                      "value": "1"
-                    },
-                    {
-                      "name": "SQLDB_DATABASE",
-                      "value": "[parameters('sqlDbName')]"
-                    },
-                    {
-                      "name": "SQLDB_PASSWORD",
-                      "value": "[parameters('sqlDbPwd')]"
-                    },
-                    {
-                      "name": "SQLDB_SERVER",
-                      "value": "[parameters('sqlServerName')]"
-                    },
-                    {
-                      "name": "SQLDB_USERNAME",
-                      "value": "[parameters('sqlDbUser')]"
-                    }
-                  ],
-                  "linuxFxVersion": "[format('DOCKER|{0}.azurecr.io/{1}', variables('containerRegistryName'), variables('containerImage'))]"
+              "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                  "[format('{0}', parameters('identity'))]": {}
                 }
               },
-              "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
-                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
-              ]
+              "properties": {
+                "azCliVersion": "2.50.0",
+                "primaryScriptUri": "[format('{0}Deployment/scripts/create_azure_functions.sh', parameters('baseUrl'))]",
+                "arguments": "[format('{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13}', parameters('solutionName'), parameters('solutionLocation'), parameters('resourceGroupName'), parameters('baseUrl'), parameters('azureOpenAIApiKey'), parameters('azureOpenAIApiVersion'), parameters('azureOpenAIEndpoint'), parameters('azureSearchAdminKey'), parameters('azureSearchServiceEndpoint'), parameters('azureSearchIndex'), parameters('sqlServerName'), parameters('sqlDbName'), parameters('sqlDbUser'), parameters('sqlDbPwd'))]",
+                "timeout": "PT1H",
+                "retentionInterval": "PT1H",
+                "cleanupPreference": "OnSuccess"
+              }
             }
           ],
           "outputs": {
