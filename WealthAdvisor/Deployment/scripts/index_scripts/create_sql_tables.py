@@ -1,4 +1,4 @@
-key_vault_name = 'nc6211-kv-isgqgxlmv6y5k' #'kv_to-be-replaced'
+key_vault_name = 'kv_to-be-replaced'
 
 import pandas as pd
 import pymssql
