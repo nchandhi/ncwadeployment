@@ -233,7 +233,7 @@ module appserviceModule 'deploy_app_service.bicep' = {
     AzureOpenAIEmbeddingkey:azOpenAI.outputs.openAIOutput.openAPIKey
     AzureOpenAIEmbeddingEndpoint:azOpenAI.outputs.openAIOutput.openAPIEndpoint
     USE_AZUREFUNCTION:'True'
-    STREAMING_AZUREFUNCTION_ENDPOINT:'TBD'
+    STREAMING_AZUREFUNCTION_ENDPOINT: azureFunctions.outputs.functionAppUrl
     SQLDB_CONNECTION_STRING:'TBD'
     SQLDB_SERVER:sqlDBModule.outputs.sqlDbOutput.sqlServerName
     SQLDB_DATABASE:sqlDBModule.outputs.sqlDbOutput.sqlDbName
