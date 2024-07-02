@@ -65,7 +65,7 @@ resource sqlDB 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
   kind:'v12.0,user,vcore,serverless'
   properties: {
     collation: 'SQL_Latin1_General_CP1_CI_AS'
-    autoPauseDelay:30
+    autoPauseDelay:60
     minCapacity:1
     readScale: 'Disabled'
     zoneRedundant: false

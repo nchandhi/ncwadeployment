@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "3451409083082108681"
+      "templateHash": "9572815524551035193"
     }
   },
   "parameters": {
@@ -300,7 +300,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "1401527259756708881"
+              "templateHash": "11943975717275371176"
             }
           },
           "parameters": {
@@ -407,7 +407,7 @@
               "kind": "v12.0,user,vcore,serverless",
               "properties": {
                 "collation": "SQL_Latin1_General_CP1_CI_AS",
-                "autoPauseDelay": 30,
+                "autoPauseDelay": 60,
                 "minCapacity": 1,
                 "readScale": "Disabled",
                 "zoneRedundant": false
