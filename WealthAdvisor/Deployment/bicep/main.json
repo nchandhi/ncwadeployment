@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "4857607861908553808"
+      "templateHash": "17426395079155302749"
     }
   },
   "parameters": {
@@ -27,7 +27,6 @@
   "variables": {
     "resourceGroupLocation": "[resourceGroup().location]",
     "resourceGroupName": "[resourceGroup().name]",
-    "subscriptionId": "[subscription().subscriptionId]",
     "solutionLocation": "[variables('resourceGroupLocation')]",
     "baseUrl": "https://raw.githubusercontent.com/nchandhi/ncwadeployment/main/WealthAdvisor/"
   },
@@ -120,6 +119,175 @@
           }
         }
       }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "deploy_cosmos_db",
+      "resourceGroup": "[resourceGroup().name]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "solutionName": {
+            "value": "[parameters('solutionPrefix')]"
+          },
+          "solutionLocation": {
+            "value": "[parameters('azureOpenAILocation')]"
+          },
+          "identity": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity'), '2022-09-01').outputs.managedIdentityOutput.value.objectId]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "3150658961575622806"
+            }
+          },
+          "parameters": {
+            "solutionName": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 15,
+              "metadata": {
+                "description": "Solution Name"
+              }
+            },
+            "solutionLocation": {
+              "type": "string"
+            },
+            "accountName": {
+              "type": "string",
+              "defaultValue": "[format('{0}-cosmos', parameters('solutionName'))]",
+              "metadata": {
+                "description": "Name"
+              }
+            },
+            "databaseName": {
+              "type": "string",
+              "defaultValue": "db_conversation_history"
+            },
+            "collectionName": {
+              "type": "string",
+              "defaultValue": "conversations"
+            },
+            "identity": {
+              "type": "string"
+            },
+            "containers": {
+              "type": "array",
+              "defaultValue": [
+                {
+                  "name": "[parameters('collectionName')]",
+                  "id": "[parameters('collectionName')]",
+                  "partitionKey": "/userId"
+                }
+              ]
+            },
+            "kind": {
+              "type": "string",
+              "defaultValue": "GlobalDocumentDB",
+              "allowedValues": [
+                "GlobalDocumentDB",
+                "MongoDB",
+                "Parse"
+              ]
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {}
+            }
+          },
+          "resources": [
+            {
+              "copy": {
+                "name": "list",
+                "count": "[length(parameters('containers'))]"
+              },
+              "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+              "apiVersion": "2022-05-15",
+              "name": "[format('{0}/{1}/{2}', split(format('{0}/{1}', parameters('accountName'), parameters('databaseName')), '/')[0], split(format('{0}/{1}', parameters('accountName'), parameters('databaseName')), '/')[1], parameters('containers')[copyIndex()].name)]",
+              "properties": {
+                "resource": {
+                  "id": "[parameters('containers')[copyIndex()].id]",
+                  "partitionKey": {
+                    "paths": [
+                      "[parameters('containers')[copyIndex()].partitionKey]"
+                    ]
+                  }
+                },
+                "options": {}
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', split(format('{0}/{1}', parameters('accountName'), parameters('databaseName')), '/')[0], split(format('{0}/{1}', parameters('accountName'), parameters('databaseName')), '/')[1])]"
+              ]
+            },
+            {
+              "type": "Microsoft.DocumentDB/databaseAccounts",
+              "apiVersion": "2022-08-15",
+              "name": "[parameters('accountName')]",
+              "kind": "[parameters('kind')]",
+              "location": "[parameters('solutionLocation')]",
+              "tags": "[parameters('tags')]",
+              "properties": {
+                "consistencyPolicy": {
+                  "defaultConsistencyLevel": "Session"
+                },
+                "locations": [
+                  {
+                    "locationName": "[parameters('solutionLocation')]",
+                    "failoverPriority": 0,
+                    "isZoneRedundant": false
+                  }
+                ],
+                "databaseAccountOfferType": "Standard",
+                "enableAutomaticFailover": false,
+                "enableMultipleWriteLocations": false,
+                "apiProperties": "[if(equals(parameters('kind'), 'MongoDB'), createObject('serverVersion', '4.0'), createObject())]",
+                "capabilities": [
+                  {
+                    "name": "EnableServerless"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+              "apiVersion": "2022-05-15",
+              "name": "[format('{0}/{1}', parameters('accountName'), parameters('databaseName'))]",
+              "properties": {
+                "resource": {
+                  "id": "[parameters('databaseName')]"
+                }
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('accountName'))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "cosmosOutput": {
+              "type": "object",
+              "value": {
+                "cosmosAccountName": "[parameters('accountName')]",
+                "cosmosAccountKey": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('accountName')), '2022-08-15').primaryMasterKey]",
+                "cosmosDatabaseName": "[parameters('databaseName')]",
+                "cosmosContainerName": "[parameters('collectionName')]"
+              }
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity')]"
+      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
@@ -887,7 +1055,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "15471595596970752245"
+              "templateHash": "7096683637883162179"
             }
           },
           "parameters": {
@@ -970,7 +1138,7 @@
           "outputs": {
             "functionAppUrl": {
               "type": "string",
-              "value": "[format('https://{0}.azurewebsites.net/api/{1}?', variables('functionAppName'), variables('functionName'))]"
+              "value": "[format('https://{0}/api/{1}?', reference(resourceId('Microsoft.Web/sites', variables('functionAppName')), '2021-02-01').defaultHostName, variables('functionName'))]"
             }
           }
         }
@@ -1650,15 +1818,6 @@
           "AzureSearchIndex": {
             "value": "articlesindex"
           },
-          "AzureSearchArticlesIndex": {
-            "value": "articlesindex"
-          },
-          "AzureSearchGrantsIndex": {
-            "value": "grantsindex"
-          },
-          "AzureSearchDraftsIndex": {
-            "value": "draftsindex"
-          },
           "AzureSearchKey": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_ai_search_service'), '2022-09-01').outputs.searchServiceOutput.value.searchServiceAdminKey]"
           },
@@ -1681,10 +1840,10 @@
             "value": "chunk_id"
           },
           "AzureSearchTitleColumn": {
-            "value": "title"
+            "value": "client_id"
           },
           "AzureSearchUrlColumn": {
-            "value": "publicurl"
+            "value": "sourceurl"
           },
           "AzureOpenAIResource": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_azure_open_ai'), '2022-09-01').outputs.openAIOutput.value.openAPIEndpoint]"
@@ -1693,13 +1852,13 @@
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_azure_open_ai'), '2022-09-01').outputs.openAIOutput.value.openAPIEndpoint]"
           },
           "AzureOpenAIModel": {
-            "value": "gpt-35-turbo-16k"
+            "value": "gpt-4"
           },
           "AzureOpenAIKey": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_azure_open_ai'), '2022-09-01').outputs.openAIOutput.value.openAPIKey]"
           },
           "AzureOpenAIModelName": {
-            "value": "gpt-35-turbo-16k"
+            "value": "gpt-4"
           },
           "AzureOpenAITemperature": {
             "value": "0"
@@ -1749,9 +1908,6 @@
           "STREAMING_AZUREFUNCTION_ENDPOINT": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_azure_function_script'), '2022-09-01').outputs.functionAppUrl.value]"
           },
-          "SQLDB_CONNECTION_STRING": {
-            "value": "TBD"
-          },
           "SQLDB_SERVER": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlServerName]"
           },
@@ -1763,6 +1919,21 @@
           },
           "SQLDB_PASSWORD": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlDbPwd]"
+          },
+          "AZURE_COSMOSDB_ACCOUNT": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_cosmos_db'), '2022-09-01').outputs.cosmosOutput.value.cosmosAccountName]"
+          },
+          "AZURE_COSMOSDB_ACCOUNT_KEY": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_cosmos_db'), '2022-09-01').outputs.cosmosOutput.value.cosmosAccountKey]"
+          },
+          "AZURE_COSMOSDB_CONVERSATIONS_CONTAINER": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_cosmos_db'), '2022-09-01').outputs.cosmosOutput.value.cosmosContainerName]"
+          },
+          "AZURE_COSMOSDB_DATABASE": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_cosmos_db'), '2022-09-01').outputs.cosmosOutput.value.cosmosDatabaseName]"
+          },
+          "AZURE_COSMOSDB_ENABLE_FEEDBACK": {
+            "value": "True"
           }
         },
         "template": {
@@ -1772,7 +1943,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "1931841577170559799"
+              "templateHash": "13609902388989063999"
             }
           },
           "parameters": {
@@ -1849,27 +2020,6 @@
                 "description": "Name of Azure Search Index"
               }
             },
-            "AzureSearchArticlesIndex": {
-              "type": "string",
-              "defaultValue": "",
-              "metadata": {
-                "description": "Name of Azure Search Articles Index"
-              }
-            },
-            "AzureSearchGrantsIndex": {
-              "type": "string",
-              "defaultValue": "",
-              "metadata": {
-                "description": "Name of Azure Search Grants Index"
-              }
-            },
-            "AzureSearchDraftsIndex": {
-              "type": "string",
-              "defaultValue": "",
-              "metadata": {
-                "description": "Name of Azure Search Drafts Index"
-              }
-            },
             "AzureSearchKey": {
               "type": "securestring",
               "defaultValue": "",
@@ -1928,14 +2078,14 @@
             },
             "AzureSearchTitleColumn": {
               "type": "string",
-              "defaultValue": "title",
+              "defaultValue": "client_id",
               "metadata": {
                 "description": "Title column"
               }
             },
             "AzureSearchUrlColumn": {
               "type": "string",
-              "defaultValue": "url",
+              "defaultValue": "sourceurl",
               "metadata": {
                 "description": "Url column"
               }
@@ -1954,7 +2104,7 @@
             },
             "AzureOpenAIModelName": {
               "type": "string",
-              "defaultValue": "gpt-35-turbo",
+              "defaultValue": "gpt-4",
               "metadata": {
                 "description": "Azure OpenAI Model Name"
               }
@@ -2023,7 +2173,7 @@
             },
             "AzureSearchQueryType": {
               "type": "string",
-              "defaultValue": "vectorSemanticHybrid",
+              "defaultValue": "vectorSimpleHybrid",
               "allowedValues": [
                 "simple",
                 "semantic",
@@ -2037,7 +2187,7 @@
             },
             "AzureSearchVectorFields": {
               "type": "string",
-              "defaultValue": "",
+              "defaultValue": "contentVector",
               "metadata": {
                 "description": "Azure Search Vector Fields"
               }
@@ -2105,13 +2255,6 @@
                 "description": "Azure Function Endpoint"
               }
             },
-            "SQLDB_CONNECTION_STRING": {
-              "type": "securestring",
-              "defaultValue": "",
-              "metadata": {
-                "description": "SQL Database Connection String"
-              }
-            },
             "SQLDB_SERVER": {
               "type": "string",
               "defaultValue": "",
@@ -2138,6 +2281,41 @@
               "defaultValue": "",
               "metadata": {
                 "description": "SQL Database Password"
+              }
+            },
+            "AZURE_COSMOSDB_ACCOUNT": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Azure Cosmos DB Account"
+              }
+            },
+            "AZURE_COSMOSDB_ACCOUNT_KEY": {
+              "type": "securestring",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Azure Cosmos DB Account Key"
+              }
+            },
+            "AZURE_COSMOSDB_CONVERSATIONS_CONTAINER": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Azure Cosmos DB Conversations Container"
+              }
+            },
+            "AZURE_COSMOSDB_DATABASE": {
+              "type": "string",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Azure Cosmos DB Database"
+              }
+            },
+            "AZURE_COSMOSDB_ENABLE_FEEDBACK": {
+              "type": "string",
+              "defaultValue": "True",
+              "metadata": {
+                "description": "Enable feedback in Cosmos DB"
               }
             }
           },
@@ -2178,18 +2356,6 @@
                     {
                       "name": "AZURE_SEARCH_SERVICE",
                       "value": "[parameters('AzureSearchService')]"
-                    },
-                    {
-                      "name": "AZURE_SEARCH_INDEX_ARTICLES",
-                      "value": "[parameters('AzureSearchArticlesIndex')]"
-                    },
-                    {
-                      "name": "AZURE_SEARCH_INDEX_GRANTS",
-                      "value": "[parameters('AzureSearchGrantsIndex')]"
-                    },
-                    {
-                      "name": "AZURE_SEARCH_INDEX_DRAFTS",
-                      "value": "[parameters('AzureSearchDraftsIndex')]"
                     },
                     {
                       "name": "AZURE_SEARCH_INDEX",
@@ -2316,10 +2482,6 @@
                       "value": "[parameters('WebAppEnableChatHistory')]"
                     },
                     {
-                      "name": "SQLDB_CONNECTION_STRING",
-                      "value": "[parameters('SQLDB_CONNECTION_STRING')]"
-                    },
-                    {
                       "name": "SQLDB_SERVER",
                       "value": "[parameters('SQLDB_SERVER')]"
                     },
@@ -2342,6 +2504,38 @@
                     {
                       "name": "STREAMING_AZUREFUNCTION_ENDPOINT",
                       "value": "[parameters('STREAMING_AZUREFUNCTION_ENDPOINT')]"
+                    },
+                    {
+                      "name": "AZURE_COSMOSDB_ACCOUNT",
+                      "value": "[parameters('AZURE_COSMOSDB_ACCOUNT')]"
+                    },
+                    {
+                      "name": "AZURE_COSMOSDB_ACCOUNT_KEY",
+                      "value": "[parameters('AZURE_COSMOSDB_ACCOUNT_KEY')]"
+                    },
+                    {
+                      "name": "AZURE_COSMOSDB_CONVERSATIONS_CONTAINER",
+                      "value": "[parameters('AZURE_COSMOSDB_CONVERSATIONS_CONTAINER')]"
+                    },
+                    {
+                      "name": "AZURE_COSMOSDB_DATABASE",
+                      "value": "[parameters('AZURE_COSMOSDB_DATABASE')]"
+                    },
+                    {
+                      "name": "AZURE_COSMOSDB_ENABLE_FEEDBACK",
+                      "value": "[parameters('AZURE_COSMOSDB_ENABLE_FEEDBACK')]"
+                    },
+                    {
+                      "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",
+                      "value": "true"
+                    },
+                    {
+                      "name": "UWSGI_PROCESSES",
+                      "value": "2"
+                    },
+                    {
+                      "name": "UWSGI_THREADS",
+                      "value": "2"
                     },
                     {
                       "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",
@@ -2385,6 +2579,7 @@
         "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_open_ai')]",
         "[resourceId('Microsoft.Resources/deployments', 'deploy_ai_search_service')]",
         "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_function_script')]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_cosmos_db')]",
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity')]",
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db')]",
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account')]"

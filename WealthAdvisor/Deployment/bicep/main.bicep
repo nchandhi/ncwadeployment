@@ -14,7 +14,7 @@ param azureOpenAILocation string
 
 var resourceGroupLocation = resourceGroup().location
 var resourceGroupName = resourceGroup().name
-var subscriptionId  = subscription().subscriptionId
+// var subscriptionId  = subscription().subscriptionId
 
 var solutionLocation = resourceGroupLocation
 // var baseUrl = 'https://raw.githubusercontent.com/microsoft/Build-your-own-AI-Assistant-Solution-Accelerator/main/'
@@ -29,6 +29,17 @@ module managedIdentityModule 'deploy_managed_identity.bicep' = {
   }
   scope: resourceGroup(resourceGroup().name)
 }
+
+module cosmosDBModule 'deploy_cosmos_db.bicep' = {
+  name: 'deploy_cosmos_db'
+  params: {
+    solutionName: solutionPrefix
+    solutionLocation: azureOpenAILocation
+    identity:managedIdentityModule.outputs.managedIdentityOutput.objectId
+  }
+  scope: resourceGroup(resourceGroup().name)
+}
+
 
 // ========== Storage Account Module ========== //
 module storageAccountModule 'deploy_storage_account.bicep' = {
@@ -51,20 +62,6 @@ module sqlDBModule 'deploy_sql_db.bicep' = {
   }
   scope: resourceGroup(resourceGroup().name)
 }
-
-
-// ========== Key Vault ========== //
-
-// module createFabricItems 'deploy_fabric_scripts.bicep' = if (fabricWorkspaceId != '') {
-//   name : 'deploy_fabric_scripts'
-//   params:{
-//     solutionLocation: solutionLocation
-//     identity:managedIdentityModule.outputs.managedIdentityOutput.id
-//     baseUrl:baseUrl
-//     keyVaultName:'test_kv_value'
-//     fabricWorkspaceId:fabricWorkspaceId
-//   }
-// }
 
 // ========== Azure AI services multi-service account ========== //
 module azAIMultiServiceAccount 'deploy_azure_ai_service.bicep' = {
@@ -170,19 +167,6 @@ module createIndex 'deploy_index_scripts.bicep' = {
   dependsOn:[keyvaultModule]
 }
 
-
-// module createFabricItems 'deploy_fabric_scripts.bicep' = if (fabricWorkspaceId != '') {
-//   name : 'deploy_fabric_scripts'
-//   params:{
-//     solutionLocation: solutionLocation
-//     identity:managedIdentityModule.outputs.managedIdentityOutput.id
-//     baseUrl:baseUrl
-//     keyVaultName:keyvaultModule.outputs.keyvaultOutput.name
-//     fabricWorkspaceId:fabricWorkspaceId
-//   }
-//   dependsOn:[keyvaultModule]
-// }
-
 // module createIndex1 'deploy_aihub_scripts.bicep' = {
 //   name : 'deploy_aihub_scripts'
 //   params:{
@@ -197,6 +181,7 @@ module createIndex 'deploy_index_scripts.bicep' = {
 //   dependsOn:[keyvaultModule]
 // }
 
+
 module appserviceModule 'deploy_app_service.bicep' = {
   name: 'deploy_app_service'
   params: {
@@ -205,9 +190,6 @@ module appserviceModule 'deploy_app_service.bicep' = {
     solutionLocation: solutionLocation
     AzureSearchService:azSearchService.outputs.searchServiceOutput.searchServiceName
     AzureSearchIndex:'articlesindex'
-    AzureSearchArticlesIndex:'articlesindex'
-    AzureSearchGrantsIndex:'grantsindex'
-    AzureSearchDraftsIndex:'draftsindex'
     AzureSearchKey:azSearchService.outputs.searchServiceOutput.searchServiceAdminKey
     AzureSearchUseSemanticSearch:'True'
     AzureSearchSemanticSearchConfig:'my-semantic-config'
@@ -215,13 +197,13 @@ module appserviceModule 'deploy_app_service.bicep' = {
     AzureSearchTopK:'5'
     AzureSearchContentColumns:'content'
     AzureSearchFilenameColumn:'chunk_id'
-    AzureSearchTitleColumn:'title'
-    AzureSearchUrlColumn:'publicurl'
+    AzureSearchTitleColumn:'client_id'
+    AzureSearchUrlColumn:'sourceurl'
     AzureOpenAIResource:azOpenAI.outputs.openAIOutput.openAPIEndpoint
     AzureOpenAIEndpoint:azOpenAI.outputs.openAIOutput.openAPIEndpoint
-    AzureOpenAIModel:'gpt-35-turbo-16k'
+    AzureOpenAIModel:'gpt-4'
     AzureOpenAIKey:azOpenAI.outputs.openAIOutput.openAPIKey
-    AzureOpenAIModelName:'gpt-35-turbo-16k'
+    AzureOpenAIModelName:'gpt-4'
     AzureOpenAITemperature:'0'
     AzureOpenAITopP:'1'
     AzureOpenAIMaxTokens:'1000'
@@ -238,11 +220,15 @@ module appserviceModule 'deploy_app_service.bicep' = {
     AzureOpenAIEmbeddingEndpoint:azOpenAI.outputs.openAIOutput.openAPIEndpoint
     USE_AZUREFUNCTION:'True'
     STREAMING_AZUREFUNCTION_ENDPOINT: azureFunctions.outputs.functionAppUrl
-    SQLDB_CONNECTION_STRING:'TBD'
     SQLDB_SERVER:sqlDBModule.outputs.sqlDbOutput.sqlServerName
     SQLDB_DATABASE:sqlDBModule.outputs.sqlDbOutput.sqlDbName
     SQLDB_USERNAME:sqlDBModule.outputs.sqlDbOutput.sqlDbUser
     SQLDB_PASSWORD:sqlDBModule.outputs.sqlDbOutput.sqlDbPwd
+    AZURE_COSMOSDB_ACCOUNT: cosmosDBModule.outputs.cosmosOutput.cosmosAccountName
+    AZURE_COSMOSDB_ACCOUNT_KEY: cosmosDBModule.outputs.cosmosOutput.cosmosAccountKey
+    AZURE_COSMOSDB_CONVERSATIONS_CONTAINER: cosmosDBModule.outputs.cosmosOutput.cosmosContainerName
+    AZURE_COSMOSDB_DATABASE: cosmosDBModule.outputs.cosmosOutput.cosmosDatabaseName
+    AZURE_COSMOSDB_ENABLE_FEEDBACK: 'True'
   }
   scope: resourceGroup(resourceGroup().name)
   dependsOn:[storageAccountModule,azOpenAI,azAIMultiServiceAccount,azSearchService]

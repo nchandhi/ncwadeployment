@@ -32,15 +32,6 @@ param AzureSearchService string = ''
 @description('Name of Azure Search Index')
 param AzureSearchIndex string = ''
 
-@description('Name of Azure Search Articles Index')
-param AzureSearchArticlesIndex string = ''
-
-@description('Name of Azure Search Grants Index')
-param AzureSearchGrantsIndex string = ''
-
-@description('Name of Azure Search Drafts Index')
-param AzureSearchDraftsIndex string = ''
-
 @description('Azure Search Admin Key')
 @secure()
 param AzureSearchKey string = ''
@@ -67,10 +58,10 @@ param AzureSearchContentColumns string = 'content'
 param AzureSearchFilenameColumn string = 'filename'
 
 @description('Title column')
-param AzureSearchTitleColumn string = 'title'
+param AzureSearchTitleColumn string = 'client_id'
 
 @description('Url column')
-param AzureSearchUrlColumn string = 'url'
+param AzureSearchUrlColumn string = 'sourceurl'
 
 @description('Name of Azure OpenAI Resource')
 param AzureOpenAIResource string
@@ -79,7 +70,7 @@ param AzureOpenAIResource string
 param AzureOpenAIModel string
 
 @description('Azure OpenAI Model Name')
-param AzureOpenAIModelName string = 'gpt-35-turbo'
+param AzureOpenAIModelName string = 'gpt-4'
 
 @description('Azure Open AI Endpoint')
 param AzureOpenAIEndpoint string = ''
@@ -113,10 +104,10 @@ param AzureOpenAIStream string = 'True'
 @allowed(
   ['simple', 'semantic', 'vector', 'vectorSimpleHybrid', 'vectorSemanticHybrid']
 )
-param AzureSearchQueryType string = 'vectorSemanticHybrid'
+param AzureSearchQueryType string = 'vectorSimpleHybrid'
 
 @description('Azure Search Vector Fields')
-param AzureSearchVectorFields string = ''
+param AzureSearchVectorFields string = 'contentVector'
 
 @description('Azure Search Permitted Groups Field')
 param AzureSearchPermittedGroupsField string = ''
@@ -143,10 +134,6 @@ param USE_AZUREFUNCTION string = 'True'
 @description('Azure Function Endpoint')
 param STREAMING_AZUREFUNCTION_ENDPOINT string = ''
 
-@description('SQL Database Connection String')
-@secure()
-param SQLDB_CONNECTION_STRING string = ''
-
 @description('SQL Database Server Name')
 param SQLDB_SERVER string = ''
 
@@ -160,6 +147,21 @@ param SQLDB_USERNAME string = ''
 @secure()
 param SQLDB_PASSWORD string = ''
 
+@description('Azure Cosmos DB Account')
+param AZURE_COSMOSDB_ACCOUNT string = ''
+
+@description('Azure Cosmos DB Account Key')
+@secure()
+param AZURE_COSMOSDB_ACCOUNT_KEY string = ''
+
+@description('Azure Cosmos DB Conversations Container')
+param AZURE_COSMOSDB_CONVERSATIONS_CONTAINER string = ''
+
+@description('Azure Cosmos DB Database')
+param AZURE_COSMOSDB_DATABASE string = ''
+
+@description('Enable feedback in Cosmos DB')
+param AZURE_COSMOSDB_ENABLE_FEEDBACK string = 'True'
 
 // var WebAppImageName = 'DOCKER|byoaiacontainer.azurecr.io/byoaia-app:latest'
 
@@ -197,18 +199,6 @@ resource Website 'Microsoft.Web/sites@2020-06-01' = {
         {
           name: 'AZURE_SEARCH_SERVICE'
           value: AzureSearchService
-        }
-        {
-          name: 'AZURE_SEARCH_INDEX_ARTICLES'
-          value: AzureSearchArticlesIndex
-        }
-        {
-          name: 'AZURE_SEARCH_INDEX_GRANTS'
-          value: AzureSearchGrantsIndex
-        }
-        {
-          name: 'AZURE_SEARCH_INDEX_DRAFTS'
-          value: AzureSearchDraftsIndex
         }
         {
           name: 'AZURE_SEARCH_INDEX'
@@ -338,10 +328,6 @@ resource Website 'Microsoft.Web/sites@2020-06-01' = {
           value: WebAppEnableChatHistory
         }
 
-        {name: 'SQLDB_CONNECTION_STRING'
-          value: SQLDB_CONNECTION_STRING
-        }
-
         {name: 'SQLDB_SERVER'
           value: SQLDB_SERVER
         }
@@ -364,6 +350,35 @@ resource Website 'Microsoft.Web/sites@2020-06-01' = {
 
         {name: 'STREAMING_AZUREFUNCTION_ENDPOINT'
           value: STREAMING_AZUREFUNCTION_ENDPOINT
+        }
+
+        {name: 'AZURE_COSMOSDB_ACCOUNT'
+          value: AZURE_COSMOSDB_ACCOUNT
+        }
+        {name: 'AZURE_COSMOSDB_ACCOUNT_KEY'
+          value: AZURE_COSMOSDB_ACCOUNT_KEY
+        }
+        {name: 'AZURE_COSMOSDB_CONVERSATIONS_CONTAINER'
+          value: AZURE_COSMOSDB_CONVERSATIONS_CONTAINER
+        }
+        {name: 'AZURE_COSMOSDB_DATABASE'
+          value: AZURE_COSMOSDB_DATABASE
+        }
+        {name: 'AZURE_COSMOSDB_ENABLE_FEEDBACK'
+          value: AZURE_COSMOSDB_ENABLE_FEEDBACK
+        }
+
+        {
+          name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
+          value: 'true'
+        }
+        {
+          name: 'UWSGI_PROCESSES'
+          value: '2'
+        }
+        {
+          name: 'UWSGI_THREADS'
+          value: '2'
         }
 
         {
