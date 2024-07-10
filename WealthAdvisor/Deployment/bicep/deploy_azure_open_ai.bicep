@@ -48,19 +48,21 @@ resource accounts_byc_openai_name_gpt_4 'Microsoft.CognitiveServices/accounts/de
   name: 'gpt-4'
   sku: {
     name: 'Standard'
-    capacity: 5
+    capacity: 30
   }
   properties: {
     model: {
       format: 'OpenAI'
       name: 'gpt-4'
-      version: '0125-Preview'
+      version: '1106-Preview'
     }
     versionUpgradeOption: 'OnceCurrentVersionExpired'
     raiPolicyName: 'Microsoft.Default'
   }
   dependsOn:[accounts_byc_openai_name_resource]
 }
+
+// '0125-Preview'
 
 resource accounts_byc_openai_name_gpt_4o 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = {
   parent: accounts_byc_openai_name_resource
