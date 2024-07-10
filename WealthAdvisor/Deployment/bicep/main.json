@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "4234393665375785327"
+      "templateHash": "11521994058869482490"
     }
   },
   "parameters": {
@@ -628,7 +628,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "11063570744045958794"
+              "templateHash": "991772654717683487"
             }
           },
           "parameters": {
@@ -667,6 +667,27 @@
                 },
                 "publicNetworkAccess": "Enabled"
               }
+            },
+            {
+              "type": "Microsoft.CognitiveServices/accounts/deployments",
+              "apiVersion": "2023-05-01",
+              "name": "[format('{0}/{1}', parameters('accounts_byc_openai_name'), 'gpt-4')]",
+              "sku": {
+                "name": "Standard",
+                "capacity": 5
+              },
+              "properties": {
+                "model": {
+                  "format": "OpenAI",
+                  "name": "gpt-4",
+                  "version": "0125-Preview"
+                },
+                "versionUpgradeOption": "OnceCurrentVersionExpired",
+                "raiPolicyName": "Microsoft.Default"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', parameters('accounts_byc_openai_name'))]"
+              ]
             },
             {
               "type": "Microsoft.CognitiveServices/accounts/deployments",
