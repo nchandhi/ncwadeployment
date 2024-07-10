@@ -2,7 +2,7 @@ resourceGroupName="nc_byoawa_test11"
 location="eastus"
 functionAppName="nctestfnapp7101"
 storageAccountName="nctestfnapp7101storage"
-zipBlobUrl="'https://raw.githubusercontent.com/nchandhi/ncwadeployment/main/WealthAdvisor/AzureFunction/function_app.zip"
+zipBlobUrl="https://raw.githubusercontent.com/nchandhi/ncwadeployment/main/WealthAdvisor/AzureFunction/function_app.zip"
 appServicePlanName="${functionAppName}-plan"
 
 # Create a Resource Group
