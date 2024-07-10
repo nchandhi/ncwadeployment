@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "5192292893074309467"
+      "templateHash": "4857607861908553808"
     }
   },
   "parameters": {
@@ -15,6 +15,12 @@
       "maxLength": 6,
       "metadata": {
         "description": "Prefix Name"
+      }
+    },
+    "azureOpenAILocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure Open AI Location"
       }
     }
   },
@@ -618,7 +624,7 @@
             "value": "[parameters('solutionPrefix')]"
           },
           "solutionLocation": {
-            "value": "[variables('solutionLocation')]"
+            "value": "[parameters('azureOpenAILocation')]"
           }
         },
         "template": {

@@ -6,6 +6,9 @@ targetScope = 'resourceGroup'
 @description('Prefix Name')
 param solutionPrefix string
 
+@description('Azure Open AI Location')
+param azureOpenAILocation string
+
 // @description('Fabric Workspace Id if you have one, else leave it empty. ')
 // param fabricWorkspaceId string
 
@@ -49,6 +52,7 @@ module sqlDBModule 'deploy_sql_db.bicep' = {
   scope: resourceGroup(resourceGroup().name)
 }
 
+
 // ========== Key Vault ========== //
 
 // module createFabricItems 'deploy_fabric_scripts.bicep' = if (fabricWorkspaceId != '') {
@@ -85,7 +89,7 @@ module azOpenAI 'deploy_azure_open_ai.bicep' = {
   name: 'deploy_azure_open_ai'
   params: {
     solutionName: solutionPrefix
-    solutionLocation: solutionLocation
+    solutionLocation: azureOpenAILocation
   }
 }
 
