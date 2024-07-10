@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "17426395079155302749"
+      "templateHash": "804846764896970687"
     }
   },
   "parameters": {
@@ -1055,7 +1055,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "7096683637883162179"
+              "templateHash": "13902352642561651651"
             }
           },
           "parameters": {
@@ -1108,10 +1108,6 @@
               "type": "securestring"
             }
           },
-          "variables": {
-            "functionAppName": "[format('{0}fn', parameters('solutionName'))]",
-            "functionName": "askai"
-          },
           "resources": [
             {
               "type": "Microsoft.Resources/deploymentScripts",
@@ -1134,7 +1130,60 @@
                 "cleanupPreference": "OnSuccess"
               }
             }
-          ],
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_open_ai')]",
+        "[resourceId('Microsoft.Resources/deployments', 'deploy_ai_search_service')]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity')]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db')]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "deploy_azure_function_script_url",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "solutionName": {
+            "value": "[parameters('solutionPrefix')]"
+          },
+          "identity": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity'), '2022-09-01').outputs.managedIdentityOutput.value.id]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.28.1.47646",
+              "templateHash": "11510000904952434093"
+            }
+          },
+          "parameters": {
+            "solutionName": {
+              "type": "string",
+              "metadata": {
+                "description": "Specifies the location for resources."
+              }
+            },
+            "identity": {
+              "type": "string"
+            }
+          },
+          "variables": {
+            "functionAppName": "[format('{0}fn', parameters('solutionName'))]",
+            "functionName": "askai"
+          },
+          "resources": [],
           "outputs": {
             "functionAppUrl": {
               "type": "string",
@@ -1144,11 +1193,8 @@
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_open_ai')]",
-        "[resourceId('Microsoft.Resources/deployments', 'deploy_ai_search_service')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account')]"
+        "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_function_script')]",
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity')]"
       ]
     },
     {
@@ -1906,7 +1952,7 @@
             "value": "True"
           },
           "STREAMING_AZUREFUNCTION_ENDPOINT": {
-            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_azure_function_script'), '2022-09-01').outputs.functionAppUrl.value]"
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_azure_function_script_url'), '2022-09-01').outputs.functionAppUrl.value]"
           },
           "SQLDB_SERVER": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db'), '2022-09-01').outputs.sqlDbOutput.value.sqlServerName]"
@@ -2578,7 +2624,7 @@
         "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_ai_service')]",
         "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_open_ai')]",
         "[resourceId('Microsoft.Resources/deployments', 'deploy_ai_search_service')]",
-        "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_function_script')]",
+        "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_function_script_url')]",
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_cosmos_db')]",
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity')]",
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db')]",

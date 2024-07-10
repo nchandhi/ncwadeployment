@@ -124,6 +124,17 @@ module azureFunctions 'deploy_azure_function_script.bicep' = {
   }
   dependsOn:[storageAccountModule]
 }
+
+module azureFunctionURL 'deploy_azure_function_script_url.bicep' = {
+  name : 'deploy_azure_function_script_url'
+  params:{
+    solutionName: solutionPrefix
+    identity:managedIdentityModule.outputs.managedIdentityOutput.id
+  }
+  dependsOn:[azureFunctions]
+}
+
+
 // ========== Key Vault ========== //
 
 module keyvaultModule 'deploy_keyvault.bicep' = {
@@ -219,7 +230,7 @@ module appserviceModule 'deploy_app_service.bicep' = {
     AzureOpenAIEmbeddingkey:azOpenAI.outputs.openAIOutput.openAPIKey
     AzureOpenAIEmbeddingEndpoint:azOpenAI.outputs.openAIOutput.openAPIEndpoint
     USE_AZUREFUNCTION:'True'
-    STREAMING_AZUREFUNCTION_ENDPOINT: azureFunctions.outputs.functionAppUrl
+    STREAMING_AZUREFUNCTION_ENDPOINT: azureFunctionURL.outputs.functionAppUrl
     SQLDB_SERVER:sqlDBModule.outputs.sqlDbOutput.sqlServerName
     SQLDB_DATABASE:sqlDBModule.outputs.sqlDbOutput.sqlDbName
     SQLDB_USERNAME:sqlDBModule.outputs.sqlDbOutput.sqlDbUser

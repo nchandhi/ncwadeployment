@@ -38,15 +38,14 @@ resource deploy_azure_function 'Microsoft.Resources/deploymentScripts@2020-10-01
   }
 }
 
+// var functionAppName = '${solutionName}fn'
+// var functionName = 'askai'
 
-var functionAppName = '${solutionName}fn'
-var functionName = 'askai'
+// resource existingFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
+//   name: functionAppName
+// }
 
-resource existingFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
-  name: functionAppName
-}
-
-// output functionAppUrl string = 'https://${existingFunctionApp.defaultHostName}'
-output functionAppUrl string = 'https://${existingFunctionApp.properties.defaultHostName}/api/${functionName}?'
+// // output functionAppUrl string = 'https://${existingFunctionApp.defaultHostName}'
+// output functionAppUrl string = 'https://${existingFunctionApp.properties.defaultHostName}/api/${functionName}?'
 
 
