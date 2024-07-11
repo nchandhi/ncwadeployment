@@ -200,7 +200,7 @@ module appserviceModule 'deploy_app_service.bicep' = {
     solutionName: solutionPrefix
     solutionLocation: solutionLocation
     AzureSearchService:azSearchService.outputs.searchServiceOutput.searchServiceName
-    AzureSearchIndex:'articlesindex'
+    AzureSearchIndex:'transcripts_index'
     AzureSearchKey:azSearchService.outputs.searchServiceOutput.searchServiceAdminKey
     AzureSearchUseSemanticSearch:'True'
     AzureSearchSemanticSearchConfig:'my-semantic-config'
@@ -240,8 +240,8 @@ module appserviceModule 'deploy_app_service.bicep' = {
     AZURE_COSMOSDB_CONVERSATIONS_CONTAINER: cosmosDBModule.outputs.cosmosOutput.cosmosContainerName
     AZURE_COSMOSDB_DATABASE: cosmosDBModule.outputs.cosmosOutput.cosmosDatabaseName
     AZURE_COSMOSDB_ENABLE_FEEDBACK: 'True'
-    VITE_POWERBI_EMBED_URL:'TBD'
+    VITE_POWERBI_EMBED_URL: 'TBD'
   }
   scope: resourceGroup(resourceGroup().name)
-  dependsOn:[storageAccountModule,azOpenAI,azAIMultiServiceAccount,azSearchService]
+  dependsOn:[azOpenAI,azAIMultiServiceAccount,azSearchService,sqlDBModule,azureFunctionURL,cosmosDBModule]
 }

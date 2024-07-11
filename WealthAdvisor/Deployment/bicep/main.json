@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "652608963364021681"
+      "templateHash": "3752093868966884787"
     }
   },
   "parameters": {
@@ -1862,7 +1862,7 @@
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_ai_search_service'), '2022-09-01').outputs.searchServiceOutput.value.searchServiceName]"
           },
           "AzureSearchIndex": {
-            "value": "articlesindex"
+            "value": "transcripts_index"
           },
           "AzureSearchKey": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_ai_search_service'), '2022-09-01').outputs.searchServiceOutput.value.searchServiceAdminKey]"
@@ -2641,8 +2641,7 @@
         "[resourceId('Microsoft.Resources/deployments', 'deploy_azure_function_script_url')]",
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_cosmos_db')]",
         "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db')]",
-        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account')]"
+        "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_sql_db')]"
       ]
     }
   ]
