@@ -48,13 +48,13 @@ resource accounts_byc_openai_name_gpt_4 'Microsoft.CognitiveServices/accounts/de
   name: 'gpt-4'
   sku: {
     name: 'Standard'
-    capacity: 30
+    capacity: 10
   }
   properties: {
     model: {
       format: 'OpenAI'
       name: 'gpt-4'
-      version: '1106-Preview'
+      version: '0125-Preview'
     }
     versionUpgradeOption: 'OnceCurrentVersionExpired'
     raiPolicyName: 'Microsoft.Default'
