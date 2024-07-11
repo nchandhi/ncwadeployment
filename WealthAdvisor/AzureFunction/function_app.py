@@ -17,7 +17,7 @@ from semantic_kernel.core_plugins.time_plugin import TimePlugin
 from semantic_kernel.functions.kernel_arguments import KernelArguments
 from semantic_kernel.functions.kernel_function_decorator import kernel_function
 from semantic_kernel.kernel import Kernel
-import pyodbc
+import pymssql
 
 # Azure Function App
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
@@ -28,19 +28,7 @@ api_version = os.environ.get("OPENAI_API_VERSION")
 deployment = os.environ.get("AZURE_OPEN_AI_DEPLOYMENT_MODEL")
 temperature = 0
 
-
 class ChatWithDataPlugin:
-    # @kernel_function(name="GetClientData", description="Given a client name, return client id")
-    # def get_client_data(self, name: Annotated[str, "the name of the client"]) -> Annotated[str, "The output is a string"]:
-    #     connectionString = os.environ.get("SQLDB_CONNECTION_STRING")
-    #     conn = pyodbc.connect(connectionString)
-    #     cursor = conn.cursor()
-    #     cursor.execute(f"select ClientId from Clients where Client like '{name}'")
-    #     cid = ''
-    #     for row in cursor.fetchall():
-    #         cid = row.ClientId
-    #     return cid
-
     @kernel_function(name="Greeting", description="Respond to any greeting or general questions")
     def greeting(self, input: Annotated[str, "the question"]) -> Annotated[str, "The output is a string"]:
         query = input.split(':::')[0]
@@ -89,15 +77,17 @@ class ChatWithDataPlugin:
         Columns: ClientId,InvestmentGoal
         3. Table: Assets
         Columns: ClientId,AssetDate,Investment,ROI,Revenue,AssetType
-        5. Table: ClientSummaries
+        4. Table: ClientSummaries
         Columns: ClientId,ClientSummary
-        6. Table: InvestmentGoalsDetails
+        5. Table: InvestmentGoalsDetails
         Columns: ClientId,InvestmentGoal,TargetAmount,Contribution
-        7. Table: Retirement
+        6. Table: Retirement
         Columns: ClientId,StatusDate,RetirementGoalProgress,EducationGoalProgress
-        8.Table: ClientMeetings
+        7.Table: ClientMeetings
         Columns: ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail
         Use Investement column from Assets table as value always.
+        Always use ClientId = {clientid} in the query.
+        Add Investement values of different asset types for a given day for total asset value.
         Only return the generated sql query. do not return anything else''' 
         #Only answer questions for the given ClientId {clientid} and do not generate queries for any other client's data.
         # Assets table has snapshots of client's assets. Use AssetDate to get the latest snapshot.
@@ -115,7 +105,13 @@ class ChatWithDataPlugin:
             sql_query = sql_query.replace("```sql",'').replace("```",'')
         
             connectionString = os.environ.get("SQLDB_CONNECTION_STRING")
-            conn = pyodbc.connect(connectionString)
+            server = os.environ.get("SQLDB_SERVER")
+            database = os.environ.get("SQLDB_DATABASE")
+            username = os.environ.get("SQLDB_USERNAME")
+            password = os.environ.get("SQLDB_PASSWORD")
+
+            conn = pymssql.connect(server, username, password, database)
+            # conn = pyodbc.connect(connectionString)
             cursor = conn.cursor()
             cursor.execute(sql_query)
             answer = ''
@@ -124,6 +120,7 @@ class ChatWithDataPlugin:
         except Exception as e:
             answer = str(e) # 'Information from database could not be retrieved. Please try again later.'
         return answer
+        #return sql_query
 
     
     @kernel_function(name="ChatWithCallTranscripts", description="given a question about meetings summary or actions or notes, get answer from call transcripts")
@@ -218,20 +215,13 @@ async def stream_processor(response):
             await asyncio.sleep(0.1)
             yield str(message[0])
 
-@app.route(route="askai", methods=[func.HttpMethod.GET])
+@app.route(route="stream_openai_text", methods=[func.HttpMethod.GET])
 async def stream_openai_text(req: Request) -> StreamingResponse:
 
-    # query = req.params.get('query')
     query = req.query_params.get("query", None)
-    # try:
-    #     req_body = req.json #req.get_json()
-    #     query = req_body["query"]
-    #     clientid = req_body["clientid"]
-    # except:
-    #     pass
 
     if not query:
-        query = "get Investment Goals for Karen Berg:::10005"
+        query = "please pass a query:::00000"
 
     kernel = Kernel()
 
@@ -256,23 +246,21 @@ async def stream_openai_text(req: Request) -> StreamingResponse:
     settings.function_call_behavior = FunctionCallBehavior.EnableFunctions(
         auto_invoke=True, filters={"included_plugins": ["ChatWithData"]}
     )
+    settings.seed = 42
+    settings.max_tokens = 800
+    settings.temperature = 0
 
-    # q_system_message = '''You are a helpful assistant. Do not return any ClientIds in final response. Do not include sources of information used. 
-    #                     Keep the response concise and relevant to the question.'''
-    # query_prompt = f'''<message role="system">{q_system_message}</message><message role="user">{query}</message>'''
-
-    system_message = '''you are a helpful assistant.do not show any client ids in final response. 
-    If you cannot answer the question, always return - I cannot answer this question from the data available. Please rephrase or add more details'''
-    #    Do not answer any questions not related to wealth advisors queries.
+    system_message = '''you are a helpful wealth advisor assistant. 
+    Do not answer any questions not related to wealth advisors queries.
+    If you cannot answer the question, always return - I cannot answer this question from the data available. Please rephrase or add more details.
+    ** Do not include any client identifiers or ids or numbers or names'''
     query_prompt = f'''<message role="system">{system_message}</message><message role="user">{query}</message>'''
 
-    #query_prompt = query + '. do not return Client Ids or sources of information used. Keep the response concise and relevant to the question.'
     sk_response = kernel.invoke_prompt_stream(
         function_name="prompt_test",
         plugin_name="weather_test",
         prompt=query_prompt,
-        settings=settings,
-    )
+        settings=settings
+    )   
 
     return StreamingResponse(stream_processor(sk_response), media_type="text/event-stream")
-

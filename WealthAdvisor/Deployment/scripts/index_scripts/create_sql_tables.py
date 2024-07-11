@@ -1,4 +1,4 @@
-key_vault_name = 'kv_to-be-replaced'
+key_vault_name = 'bycwa-keyvault' #'kv_to-be-replaced'
 
 import pandas as pd
 import pymssql
@@ -112,6 +112,46 @@ conn.commit()
 #     print(row.ClientId, row.AssetType, row.Investment)
 
 
+# from decimal import Decimal
+
+# cursor.execute('DROP TABLE IF EXISTS Assets')
+# conn.commit()
+
+# create_assets_sql = """CREATE TABLE Assets (
+#                 ClientId int NOT NULL,
+#                 AssetDate Date,
+#                 Investment Decimal(18,2),
+#                 ROI Decimal(18,2),
+#                 Revenue Decimal(18,2),
+#                 AssetType varchar(255)
+#             );"""
+
+# cursor.execute(create_assets_sql)
+# conn.commit()
+
+# # df = pd.read_csv('../Data/Assets.csv')
+# file_path = directory + '/Assets.csv'
+# file_client = file_system_client.get_file_client(file_path)
+# csv_file = file_client.download_file()
+# df = pd.read_csv(csv_file, encoding='utf-8')
+
+# df['AssetDate'] = pd.to_datetime(df['AssetDate'], format='%m/%d/%Y') #   %Y-%m-%d')
+# df['ClientId'] = df['ClientId'].astype(int)
+# df['Investment'] = df['Investment'].astype(float)
+# df['ROI'] = df['ROI'].astype(float)
+# df['Revenue'] = df['Revenue'].astype(float)
+
+
+# for index, item in df.iterrows():
+#     #cursor.execute(f"INSERT INTO Assets (ClientId,AssetDate, Investment, ROI, Revenue, AssetType) VALUES (?,?, ?, ?, ?, ?)", item.ClientId, item.AssetDate, item.Investment, item.ROI, item.Revenue, item.AssetType)
+#     cursor.execute(f"INSERT INTO Assets (ClientId,AssetDate, Investment, ROI, Revenue, AssetType) VALUES (%s,%s,%s,%s,%s,%s)", (item.ClientId, item.AssetDate, item.Investment, item.ROI, item.Revenue, item.AssetType))
+# conn.commit()
+
+# # cursor.execute(f"select * from Assets")
+# # for row in cursor.fetchall():
+# #     print(row.Investment, row.ROI)
+
+
 from decimal import Decimal
 
 cursor.execute('DROP TABLE IF EXISTS Assets')
@@ -135,6 +175,15 @@ file_client = file_system_client.get_file_client(file_path)
 csv_file = file_client.download_file()
 df = pd.read_csv(csv_file, encoding='utf-8')
 
+# # to adjust the dates to current date
+df['AssetDate'] = pd.to_datetime(df['AssetDate'])
+today = datetime.today()
+days_difference = (today - max(df['AssetDate'])).days - 90
+months_difference = int(days_difference/30)
+print(months_difference)
+# df['AssetDate'] = df['AssetDate'] + pd.Timedelta(days=days_difference)
+df['AssetDate'] = df['AssetDate'] + pd.DateOffset(months=months_difference)
+
 df['AssetDate'] = pd.to_datetime(df['AssetDate'], format='%m/%d/%Y') #   %Y-%m-%d')
 df['ClientId'] = df['ClientId'].astype(int)
 df['Investment'] = df['Investment'].astype(float)
@@ -147,9 +196,8 @@ for index, item in df.iterrows():
     cursor.execute(f"INSERT INTO Assets (ClientId,AssetDate, Investment, ROI, Revenue, AssetType) VALUES (%s,%s,%s,%s,%s,%s)", (item.ClientId, item.AssetDate, item.Investment, item.ROI, item.Revenue, item.AssetType))
 conn.commit()
 
-# cursor.execute(f"select * from Assets")
-# for row in cursor.fetchall():
-#     print(row.Investment, row.ROI)
+
+#InvestmentGoals
 
 cursor.execute('DROP TABLE IF EXISTS InvestmentGoals')
 conn.commit()
