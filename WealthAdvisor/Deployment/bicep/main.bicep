@@ -6,8 +6,8 @@ targetScope = 'resourceGroup'
 @description('Prefix Name')
 param solutionPrefix string
 
-@description('Azure Open AI Location')
-param azureOpenAILocation string
+@description('CosmosDB Location')
+param cosmosLocation string
 
 // @description('Fabric Workspace Id if you have one, else leave it empty. ')
 // param fabricWorkspaceId string
@@ -34,7 +34,7 @@ module cosmosDBModule 'deploy_cosmos_db.bicep' = {
   name: 'deploy_cosmos_db'
   params: {
     solutionName: solutionPrefix
-    solutionLocation: azureOpenAILocation
+    solutionLocation: cosmosLocation
     identity:managedIdentityModule.outputs.managedIdentityOutput.objectId
   }
   scope: resourceGroup(resourceGroup().name)
@@ -86,7 +86,7 @@ module azOpenAI 'deploy_azure_open_ai.bicep' = {
   name: 'deploy_azure_open_ai'
   params: {
     solutionName: solutionPrefix
-    solutionLocation: azureOpenAILocation
+    solutionLocation: resourceGroupLocation
   }
 }
 

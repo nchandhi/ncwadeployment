@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "6681302956473779746"
+      "templateHash": "652608963364021681"
     }
   },
   "parameters": {
@@ -17,10 +17,10 @@
         "description": "Prefix Name"
       }
     },
-    "azureOpenAILocation": {
+    "cosmosLocation": {
       "type": "string",
       "metadata": {
-        "description": "Azure Open AI Location"
+        "description": "CosmosDB Location"
       }
     }
   },
@@ -135,7 +135,7 @@
             "value": "[parameters('solutionPrefix')]"
           },
           "solutionLocation": {
-            "value": "[parameters('azureOpenAILocation')]"
+            "value": "[parameters('cosmosLocation')]"
           },
           "identity": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_managed_identity'), '2022-09-01').outputs.managedIdentityOutput.value.objectId]"
@@ -792,7 +792,7 @@
             "value": "[parameters('solutionPrefix')]"
           },
           "solutionLocation": {
-            "value": "[parameters('azureOpenAILocation')]"
+            "value": "[variables('resourceGroupLocation')]"
           }
         },
         "template": {
