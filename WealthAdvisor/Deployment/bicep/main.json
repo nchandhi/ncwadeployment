@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "8091544287276367345"
+      "templateHash": "11752340250941951896"
     }
   },
   "parameters": {
@@ -1922,13 +1922,13 @@
             "value": "You are a helpful Wealth Advisor assistant"
           },
           "AzureOpenAIApiVersion": {
-            "value": "2023-12-01-preview"
+            "value": "2024-02-15-preview"
           },
           "AzureOpenAIStream": {
             "value": "True"
           },
           "AzureSearchQueryType": {
-            "value": "vectorSimpleHybrid"
+            "value": "simple"
           },
           "AzureSearchVectorFields": {
             "value": "contentVector"
@@ -1992,7 +1992,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "3528634147733069533"
+              "templateHash": "6875226704105965946"
             }
           },
           "parameters": {
@@ -2209,7 +2209,7 @@
             },
             "AzureOpenAIApiVersion": {
               "type": "string",
-              "defaultValue": "2023-12-01-preview",
+              "defaultValue": "2024-02-15-preview",
               "metadata": {
                 "description": "Azure OpenAI Api Version"
               }
@@ -2223,7 +2223,7 @@
             },
             "AzureSearchQueryType": {
               "type": "string",
-              "defaultValue": "vectorSimpleHybrid",
+              "defaultValue": "simple",
               "allowedValues": [
                 "simple",
                 "semantic",

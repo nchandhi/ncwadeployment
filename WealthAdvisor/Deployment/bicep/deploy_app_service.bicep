@@ -97,7 +97,7 @@ param AzureOpenAIStopSequence string = '\n'
 param AzureOpenAISystemMessage string = 'You are an AI assistant that helps people find information.'
 
 @description('Azure OpenAI Api Version')
-param AzureOpenAIApiVersion string = '2023-12-01-preview'
+param AzureOpenAIApiVersion string = '2024-02-15-preview'
 
 @description('Whether or not to stream responses from Azure OpenAI')
 param AzureOpenAIStream string = 'True'
@@ -106,7 +106,7 @@ param AzureOpenAIStream string = 'True'
 @allowed(
   ['simple', 'semantic', 'vector', 'vectorSimpleHybrid', 'vectorSemanticHybrid']
 )
-param AzureSearchQueryType string = 'vectorSimpleHybrid'
+param AzureSearchQueryType string = 'simple'
 
 @description('Azure Search Vector Fields')
 param AzureSearchVectorFields string = 'contentVector'
