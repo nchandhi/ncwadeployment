@@ -387,19 +387,6 @@ resource Website 'Microsoft.Web/sites@2020-06-01' = {
           name: 'UWSGI_THREADS'
           value: '2'
         }
-
-        {
-          name: 'SCM_DO_BUILD_DURING_DEPLOYMENT'
-          value: 'true'
-        }
-        {
-          name: 'UWSGI_PROCESSES'
-          value: '2'
-        }
-        {
-          name: 'UWSGI_THREADS'
-          value: '2'
-        }
       ]
       linuxFxVersion: WebAppImageName
     }

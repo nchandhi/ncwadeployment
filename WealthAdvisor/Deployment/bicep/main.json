@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "3277950077495613550"
+      "templateHash": "8091544287276367345"
     }
   },
   "parameters": {
@@ -1992,7 +1992,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "2413646939993004278"
+              "templateHash": "3528634147733069533"
             }
           },
           "parameters": {
@@ -2585,18 +2585,6 @@
                     {
                       "name": "VITE_POWERBI_EMBED_URL",
                       "value": "[parameters('VITE_POWERBI_EMBED_URL')]"
-                    },
-                    {
-                      "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",
-                      "value": "true"
-                    },
-                    {
-                      "name": "UWSGI_PROCESSES",
-                      "value": "2"
-                    },
-                    {
-                      "name": "UWSGI_THREADS",
-                      "value": "2"
                     },
                     {
                       "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",
