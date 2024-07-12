@@ -16,9 +16,11 @@ param HostingPlanName string = '${ solutionName }-app-service-plan'
 
 @description('The pricing tier for the App Service plan')
 @allowed(
-  ['F1', 'D1', 'B1', 'B2', 'B3', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4']
+  ['F1', 'D1', 'B1', 'B2', 'B3', 'S1', 'S2', 'S3', 'P1', 'P2', 'P3', 'P4','P0v3']
 )
-param HostingPlanSku string = 'B1'
+// param HostingPlanSku string = 'B1'
+
+param HostingPlanSku string = 'P0v3'
 
 @description('Name of Web App')
 param WebsiteName string = '${ solutionName }-app-service'

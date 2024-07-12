@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "3752093868966884787"
+      "templateHash": "3277950077495613550"
     }
   },
   "parameters": {
@@ -1992,7 +1992,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "7251577467903568440"
+              "templateHash": "2413646939993004278"
             }
           },
           "parameters": {
@@ -2022,7 +2022,7 @@
             },
             "HostingPlanSku": {
               "type": "string",
-              "defaultValue": "B1",
+              "defaultValue": "P0v3",
               "allowedValues": [
                 "F1",
                 "D1",
@@ -2035,7 +2035,8 @@
                 "P1",
                 "P2",
                 "P3",
-                "P4"
+                "P4",
+                "P0v3"
               ],
               "metadata": {
                 "description": "The pricing tier for the App Service plan"
