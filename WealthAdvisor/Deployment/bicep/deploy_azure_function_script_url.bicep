@@ -9,6 +9,4 @@ resource existingFunctionApp 'Microsoft.Web/sites@2021-02-01' existing = {
   name: functionAppName
 }
 
-output functionAppUrl string = 'https://${existingFunctionApp.properties.defaultHostName}/api/${functionName}?'
-
-
+output functionAppUrl string = 'https://${existingFunctionApp.properties.defaultHostName}/api/${functionName}'

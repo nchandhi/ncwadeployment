@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "2870829971769066895"
+      "templateHash": "16147472505442639161"
     }
   },
   "parameters": {
@@ -1165,7 +1165,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "5110482750712376451"
+              "templateHash": "9511772940816294948"
             }
           },
           "parameters": {
@@ -1187,7 +1187,7 @@
           "outputs": {
             "functionAppUrl": {
               "type": "string",
-              "value": "[format('https://{0}/api/{1}?', reference(resourceId('Microsoft.Web/sites', variables('functionAppName')), '2021-02-01').defaultHostName, variables('functionName'))]"
+              "value": "[format('https://{0}/api/{1}', reference(resourceId('Microsoft.Web/sites', variables('functionAppName')), '2021-02-01').defaultHostName, variables('functionName'))]"
             }
           }
         }
