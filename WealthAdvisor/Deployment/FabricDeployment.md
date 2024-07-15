@@ -42,7 +42,7 @@
 11.  Click `Close`
 12.  Report should refresh with new connection.
 
-## Step 4:**Publish Power BI**
+## Step 4: **Publish Power BI**
 1.  Click `Publish` (from PBI report in Power BI Desktop application)
 2.  Select Fabric Workspace
 3.  Click `Select`
@@ -70,7 +70,7 @@
     ![Application Environment Variables](images/fabric/AppEnvironmentVariables.png)
 
 6. Modify the below variables with the value collected in step 2.9 above.
-- REACT_APP_POWERBI_URL
+- VITE_POWERBI_EMBED_URL
 
 7. Click on `Apply` button at the bottom of the screen. Then click on `Confirm` in the pop-up.
 

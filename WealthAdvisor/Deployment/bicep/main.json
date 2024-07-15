@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "11752340250941951896"
+      "templateHash": "2870829971769066895"
     }
   },
   "parameters": {
@@ -1165,7 +1165,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "11510000904952434093"
+              "templateHash": "5110482750712376451"
             }
           },
           "parameters": {
@@ -1181,7 +1181,7 @@
           },
           "variables": {
             "functionAppName": "[format('{0}fn', parameters('solutionName'))]",
-            "functionName": "askai"
+            "functionName": "stream_openai_text"
           },
           "resources": [],
           "outputs": {
