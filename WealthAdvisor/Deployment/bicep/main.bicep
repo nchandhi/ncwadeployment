@@ -110,7 +110,7 @@ module azureFunctions 'deploy_azure_function_script.bicep' = {
     solutionLocation: solutionLocation
     resourceGroupName:resourceGroupName
     azureOpenAIApiKey:azOpenAI.outputs.openAIOutput.openAPIKey
-    azureOpenAIApiVersion:'2023-07-01-preview'
+    azureOpenAIApiVersion:'2023-09-01-preview'
     azureOpenAIEndpoint:azOpenAI.outputs.openAIOutput.openAPIEndpoint
     azureSearchAdminKey:azSearchService.outputs.searchServiceOutput.searchServiceAdminKey
     azureSearchServiceEndpoint:azSearchService.outputs.searchServiceOutput.searchServiceEndpoint

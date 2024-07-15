@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "16147472505442639161"
+      "templateHash": "2944030756805106229"
     }
   },
   "parameters": {
@@ -1015,7 +1015,7 @@
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_azure_open_ai'), '2022-09-01').outputs.openAIOutput.value.openAPIKey]"
           },
           "azureOpenAIApiVersion": {
-            "value": "2023-07-01-preview"
+            "value": "2023-09-01-preview"
           },
           "azureOpenAIEndpoint": {
             "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deploy_azure_open_ai'), '2022-09-01').outputs.openAIOutput.value.openAPIEndpoint]"
