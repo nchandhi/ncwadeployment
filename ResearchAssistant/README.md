@@ -1,8 +1,8 @@
 >Legal Notice: This is a pre-release and preview solution and therefore may not work correctly. Certain features may be missing or disabled. Microsoft may change or update this pre-release and preview solution at any time.
 
-# Build your own AI Assistant Solution Accelerator
+# Build your own copilot Solution Accelerator
 
-MENU: [**USER STORY**](#user-story) \| [**ONE-CLICK DEPLOY**](#one-click-deploy)  \| [**SUPPORTING DOCUMENTS**](#supporting-documents) \|
+MENU: [**USER STORY**](#user-story) \| [**QUICK DEPLOY**](#quick-deploy)  \| [**SUPPORTING DOCUMENTS**](#supporting-documents) \|
 [**CUSTOMER TRUTH**](#customer-truth)
 
 
@@ -38,9 +38,9 @@ The sample data is sourced from a select set of research published on [PubMed](h
 ![Landing Page](Deployment/images/readMe/landing_page.png)
 
 
-<h2><img src="Deployment/images/readMe/oneClickDeploy.png" width="64">
+<h2><img src="Deployment/images/readMe/quickDeploy.png" width="64">
 <br/>
-One-click deploy
+quick deploy
 </h2>
 
 ### Prerequisites
