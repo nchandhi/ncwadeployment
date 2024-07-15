@@ -113,7 +113,7 @@ Customer stories coming soon.
 Responsible AI Transparency FAQ 
 </h2>
 
-Please refer to [Transarency FAQ](./TRANSPARENCY_FAQ.md) for responsible AI transparency details of this solution accelerator.
+Please refer to [Transarency FAQ](../TRANSPARENCY_FAQ.md) for responsible AI transparency details of this solution accelerator.
 
 <br/>
 <br/>
