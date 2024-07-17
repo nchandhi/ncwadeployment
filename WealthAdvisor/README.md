@@ -22,7 +22,7 @@ It leverages Azure Open AI Service, Azure AI Search and Microsoft Fabric, to str
 
 A Woodgrove Bank Wealth Advisor is preparing for upcoming client meetings. He wants insight into his scheduled client meetings, access to portfolio information, a comprehensive understanding of previous meetings, and the ability to ask questions about client’s financial details and interests. 
   
-This solution with an integrated copilot helps Wealth Advisors to save time and prepare relevant discussion topics for scheduled meetings. It provides an overview of daily client meetings with seamless navigation between viewing client profiles and chatting with structured data. Altogether, these features streamline meeting preparation for wealth advisors and result in more productive conversations with clients. 
+This solution with an integrated copilot helps Wealth Advisors to save time and prepare relevant discussion topics for scheduled meetings. It provides an overview of daily client meetings with seamless navigation between viewing client profiles and chatting with data. Altogether, these features streamline meeting preparation for wealth advisors and result in more productive conversations with clients. 
 
 The sample data used in this repository is synthetic and generated using Azure Open AI service. The data is intended for use as sample data only.
 
