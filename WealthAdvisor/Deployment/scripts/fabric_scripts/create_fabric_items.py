@@ -49,8 +49,6 @@ fabric_create_workspace_url = f"https://api.fabric.microsoft.com/v1/workspaces"
 
 #get workspace name
 ws_res = requests.get(fabric_base_url, headers=fabric_headers)
-print("ws_res")
-print(ws_res)
 workspace_name = ws_res.json()['displayName']
 
 #create lakehouse
@@ -60,8 +58,7 @@ lakehouse_data = {
 }
 lakehouse_res = requests.post(fabric_items_url, headers=fabric_headers, json=lakehouse_data)
 
-print("lakehouse name: ", lakehouse_name)
-print("lakehouse res: ", lakehouse_res)
+# print("lakehouse name: ", lakehouse_name)
 
 # copy local files to lakehouse
 from azure.storage.filedatalake import (

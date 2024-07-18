@@ -29,7 +29,7 @@
 9.   Click Copy button in popup window.
 10.  Wait 5 minutes to allow the data pipelines to finish processing then proceed to next step.
 ## Step 3: **Open Power BI report**
-1.   Download the .pbix file from the [Reports folder](Deployment/Reports/).
+1.   Download the .pbix file from the [Reports folder](../PowerBIReport/).
 2.   Open Power BI report in Power BI Dashboard
 3.   Click on `Transform Data` menu option from the Task Bar
 4.   Click `Data source settings`
@@ -53,7 +53,9 @@
 8.  Select `OAuth2` for the Authentication method
 9.  Select option for `Privacy level setting for this data source`
 10. Click `Sign in`
-11. Navigate back to Fabric workspace and click on Power BI report and copy the URL
+11. Navigate back to Fabric workspace and click on Power BI report.
+12. Click on `File` -> `Embed Report` -> `Website or Portal` from the top menu.
+13. Copy the first line from the popup with title `Here's a link you can use to embed this content.` for use later in step 5.6.
 
 ## Step 5: Update the Power BI URL in Azure App Service configuration
 1. Launch the Azure Portal [Azure Portal](https://portal.azure.com/).
@@ -69,7 +71,7 @@
 
     ![Application Environment Variables](images/fabric/AppEnvironmentVariables.png)
 
-6. Modify the below variables with the value collected in step 2.9 above.
+6. Modify the below variables with the value collected in step 4.13 above.
 - VITE_POWERBI_EMBED_URL
 
 7. Click on `Apply` button at the bottom of the screen. Then click on `Confirm` in the pop-up.
