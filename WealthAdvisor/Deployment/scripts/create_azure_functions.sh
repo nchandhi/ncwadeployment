@@ -42,7 +42,7 @@ az functionapp config appsettings set --name $functionappname -g $resourceGroupN
                 --settings AZURE_OPEN_AI_API_KEY=$azureOpenAIApiKey AZURE_OPEN_AI_DEPLOYMENT_MODEL=$azureOpenAIDeploymentModel \
                 AZURE_OPEN_AI_ENDPOINT=$azureOpenAIEndpoint AZURE_OPENAI_EMBEDDING_DEPLOYMENT=$azureOpenAIEmbeddingDeployment \
                 OPENAI_API_VERSION=$azureOpenAIApiVersion \
-                AZURE_AI_SEARCH_API_KEY=$azureOpenAIApiKey AZURE_AI_SEARCH_ENDPOINT=$azureSearchServiceEndpoint \
+                AZURE_AI_SEARCH_API_KEY=$azureSearchAdminKey AZURE_AI_SEARCH_ENDPOINT=$azureSearchServiceEndpoint \
                 AZURE_SEARCH_INDEX=$azureSearchIndex \
                 PYTHON_ENABLE_INIT_INDEXING=$valueone PYTHON_ISOLATE_WORKER_DEPENDENCIES=$valueone \
                 SQLDB_CONNECTION_STRING=$sqlDBConn \
