@@ -37,11 +37,10 @@ class ChatWithDataPlugin:
         query = input.split(':::')[0]
         endpoint = os.environ.get("AZURE_OPEN_AI_ENDPOINT")
         api_key = os.environ.get("AZURE_OPEN_AI_API_KEY")
-        api_version = os.environ.get("OPENAI_API_VERSION")
         client = openai.AzureOpenAI(
             azure_endpoint=endpoint,
             api_key=api_key,
-            api_version=api_version
+            api_version="2023-09-01-preview"
         )
         deployment = os.environ.get("AZURE_OPEN_AI_DEPLOYMENT_MODEL")
         try:
@@ -59,7 +58,7 @@ class ChatWithDataPlugin:
         return answer
 
     
-    @kernel_function(name="ChatWithSQLDatabase", description="Given a query about client assets, investements and meeting dates, get details from the database")
+    @kernel_function(name="ChatWithSQLDatabase", description="Given a query about client assets, investements and meeting dates or times, get details from the database")
     def get_SQL_Response(
         self,
         input: Annotated[str, "the question"],
@@ -72,12 +71,11 @@ class ChatWithDataPlugin:
         query = input
         endpoint = os.environ.get("AZURE_OPEN_AI_ENDPOINT")
         api_key = os.environ.get("AZURE_OPEN_AI_API_KEY")
-        api_version = os.environ.get("OPENAI_API_VERSION")
 
         client = openai.AzureOpenAI(
             azure_endpoint=endpoint,
             api_key=api_key,
-            api_version=api_version
+            api_version="2023-09-01-preview"
         )
         deployment = os.environ.get("AZURE_OPEN_AI_DEPLOYMENT_MODEL")
 
@@ -97,14 +95,15 @@ class ChatWithDataPlugin:
         7.Table: ClientMeetings
         Columns: ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail
         Use Investement column from Assets table as value always.
+        Always add `group by AssetDate` in the query to get Investement values of different asset types on a given date.
         Do not use client name in filter.
-        Always use ClientId = {clientid} in the query.
+        Do not include assets values unless asked for.
+        Always use ClientId = {clientid} in the query filter.
         Always return client name in the query.
-        Do not include assets details unless asked for.
-        Add Investement values of different asset types for a given day for total asset value.
         Only return the generated sql query. do not return anything else''' 
         #Only answer questions for the given ClientId {clientid} and do not generate queries for any other client's data.
         # Assets table has snapshots of client's assets. Use AssetDate to get the latest snapshot.
+        #Assets table has snapshots of client's assets on a given date in AssetDate column.
         try:
 
             completion = client.chat.completions.create(
@@ -117,8 +116,9 @@ class ChatWithDataPlugin:
             )
             sql_query = completion.choices[0].message.content
             sql_query = sql_query.replace("```sql",'').replace("```",'')
-            # print(sql_query)
+            #print(sql_query)
         
+            connectionString = os.environ.get("SQLDB_CONNECTION_STRING")
             server = os.environ.get("SQLDB_SERVER")
             database = os.environ.get("SQLDB_DATABASE")
             username = os.environ.get("SQLDB_USERNAME")
@@ -151,13 +151,11 @@ class ChatWithDataPlugin:
         search_endpoint = os.environ.get("AZURE_AI_SEARCH_ENDPOINT") 
         search_key = os.environ.get("AZURE_AI_SEARCH_API_KEY")
         index_name = os.environ.get("AZURE_SEARCH_INDEX")
-        api_version = os.environ.get("OPENAI_API_VERSION")
 
-        version1 = '2024-02-01'
         client = openai.AzureOpenAI(
             azure_endpoint= endpoint, #f"{endpoint}/openai/deployments/{deployment}/extensions", 
             api_key=apikey, 
-            api_version=version1
+            api_version="2024-02-01"
         )
 
         # ClientId = '10005' 
@@ -223,6 +221,7 @@ class ChatWithDataPlugin:
                 ]
             }
         )
+
         answer = completion.choices[0].message.content
         return answer
 
@@ -281,17 +280,34 @@ async def stream_openai_text(req: Request) -> StreamingResponse:
     # user_query_prompt = f'''{query}. Always use clientId as {query.split(':::')[-1]} ''' 
     # query_prompt = f'''<message role="system">{system_message}</message><message role="user">{user_query_prompt}</message>'''
 
-    system_message = '''you are a helpful wealth advisor assistant. 
+    # system_message = '''you are a helpful wealth advisor assistant. 
+    # Do not answer any questions not related to wealth advisors queries.
+    # If you cannot answer the question, always return - I cannot answer this question from the data available. Please rephrase or add more details.
+    # ** Do not include any client identifiers or ids or numbers in the final response.
+    # '''
+
+    # # ** Do not include any client identifiers or ids or numbers or names
+    # user_query = query.replace('?',' ')
+
+    # user_query_prompt = f'''{user_query}. Always use clientId as {user_query.split(':::')[-1]} ''' 
+    # query_prompt = f'''<message role="system">{system_message}</message><message role="user">{user_query_prompt}</message>'''
+
+    system_message = '''you are a helpful assistant to a wealth advisor. 
     Do not answer any questions not related to wealth advisors queries.
+    If the client name and client id do not match, only return - Please only ask questions about the selected client. do not return any other information.
+    Only use the client name returned from database in the response.
     If you cannot answer the question, always return - I cannot answer this question from the data available. Please rephrase or add more details.
-    ** Do not include any client identifiers or ids or numbers in the final response.
+    ** Remove any client identifiers or ids or numbers or ClientId in the final response.
     '''
 
+    #Always use the client name returned from database in the response.
     # ** Do not include any client identifiers or ids or numbers or names
     user_query = query.replace('?',' ')
 
-    user_query_prompt = f'''{user_query}. Always use clientId as {user_query.split(':::')[-1]} ''' 
+    user_query_prompt = f'''{user_query}. Always send clientId as {user_query.split(':::')[-1]} '''
+    # user_query_prompt = user_query
     query_prompt = f'''<message role="system">{system_message}</message><message role="user">{user_query_prompt}</message>'''
+
 
     sk_response = kernel.invoke_prompt_stream(
         function_name="prompt_test",
