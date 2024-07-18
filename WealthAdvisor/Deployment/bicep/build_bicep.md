@@ -15,10 +15,10 @@ az acr update --name bycwacontainer --anonymous-pull-enabled
 
 # Azure Function docker script
 az login
-docker build --tag nalinichandhi/wafunctionimage:latest .
+docker build --tag nalinichandhi/byc-wa-fn:latest .
 <!-- docker run -p 8080:80 -it nalinichandhi/wafunctionimage:latest -->
 az acr login --name bycwacontainer
-docker tag nalinichandhi/wafunctionimage:latest bycwacontainer.azurecr.io/wafunctionimage:latest
-docker push bycwacontainer.azurecr.io/wafunctionimage:latest
+docker tag nalinichandhi/byc-wa-fn:latest bycwacontainer.azurecr.io/byc-wa-fn:latest
+docker push bycwacontainer.azurecr.io/byc-wa-fn:latest
 az acr update -n bycwacontainer --admin-enabled true
 az acr update --name bycwacontainer --anonymous-pull-enabled

@@ -36,7 +36,7 @@ az storage account create --name $storageAccount --location eastus --resource-gr
 az functionapp create --resource-group $resourceGroupName --name $functionappname \
                 --environment $env_name --storage-account $storageAccount \
                 --functions-version 4 --runtime python \
-                --image bycwacontainer.azurecr.io/wafunctionimage:latest
+                --image bycwacontainer.azurecr.io/byc-wa-fn:latest
 
 az functionapp config appsettings set --name $functionappname -g $resourceGroupName \
                 --settings AZURE_OPEN_AI_API_KEY=$azureOpenAIApiKey AZURE_OPEN_AI_DEPLOYMENT_MODEL=$azureOpenAIDeploymentModel \
