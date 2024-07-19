@@ -95,15 +95,12 @@ class ChatWithDataPlugin:
         7.Table: ClientMeetings
         Columns: ClientId,ConversationId,Title,StartTime,EndTime,Advisor,ClientEmail
         Use Investement column from Assets table as value always.
-        Always add `group by AssetDate` in the query to get Investement values of different asset types on a given date.
+        Assets table has snapshots of values by date. Do not add numbers across different dates for total values.
         Do not use client name in filter.
         Do not include assets values unless asked for.
         Always use ClientId = {clientid} in the query filter.
         Always return client name in the query.
         Only return the generated sql query. do not return anything else''' 
-        #Only answer questions for the given ClientId {clientid} and do not generate queries for any other client's data.
-        # Assets table has snapshots of client's assets. Use AssetDate to get the latest snapshot.
-        #Assets table has snapshots of client's assets on a given date in AssetDate column.
         try:
 
             completion = client.chat.completions.create(
@@ -158,11 +155,6 @@ class ChatWithDataPlugin:
             api_version="2024-02-01"
         )
 
-        # ClientId = '10005' 
-        # question = 'List top 3 topics client is interested in'
-        # print(question)
-        # ClientId = question.split(':::')[-1]
-        # query = question.split(':::')[0]
         query = question
         system_message = '''You are an assistant who provides wealth advisors with helpful information to prepare for client meetings. 
         You have access to the client’s meeting call transcripts. 
@@ -245,7 +237,6 @@ async def stream_openai_text(req: Request) -> StreamingResponse:
     service_id = "function_calling"
 
     # Please make sure your AzureOpenAI Deployment allows for function calling
-    
     ai_service = AzureChatCompletion(
         service_id=service_id,
         endpoint=endpoint,
@@ -268,30 +259,6 @@ async def stream_openai_text(req: Request) -> StreamingResponse:
     settings.max_tokens = 800
     settings.temperature = 0
 
-    # system_message = '''you are a helpful wealth advisor assistant. 
-    # Do not answer any questions not related to wealth advisors queries.
-    # ** Do not include any client identifiers or ids or numbers in the final response.
-    # Answer the question as truthfully as possible, and if you're unsure of the answer, say - I cannot answer this question from the data available. Please rephrase or add more details.
-    # '''
-
-    # # ** Do not include any client identifiers or ids or numbers or names
-    # query = query.replace('?',' ')
-
-    # user_query_prompt = f'''{query}. Always use clientId as {query.split(':::')[-1]} ''' 
-    # query_prompt = f'''<message role="system">{system_message}</message><message role="user">{user_query_prompt}</message>'''
-
-    # system_message = '''you are a helpful wealth advisor assistant. 
-    # Do not answer any questions not related to wealth advisors queries.
-    # If you cannot answer the question, always return - I cannot answer this question from the data available. Please rephrase or add more details.
-    # ** Do not include any client identifiers or ids or numbers in the final response.
-    # '''
-
-    # # ** Do not include any client identifiers or ids or numbers or names
-    # user_query = query.replace('?',' ')
-
-    # user_query_prompt = f'''{user_query}. Always use clientId as {user_query.split(':::')[-1]} ''' 
-    # query_prompt = f'''<message role="system">{system_message}</message><message role="user">{user_query_prompt}</message>'''
-
     system_message = '''you are a helpful assistant to a wealth advisor. 
     Do not answer any questions not related to wealth advisors queries.
     If the client name and client id do not match, only return - Please only ask questions about the selected client. do not return any other information.
@@ -300,12 +267,9 @@ async def stream_openai_text(req: Request) -> StreamingResponse:
     ** Remove any client identifiers or ids or numbers or ClientId in the final response.
     '''
 
-    #Always use the client name returned from database in the response.
-    # ** Do not include any client identifiers or ids or numbers or names
     user_query = query.replace('?',' ')
 
     user_query_prompt = f'''{user_query}. Always send clientId as {user_query.split(':::')[-1]} '''
-    # user_query_prompt = user_query
     query_prompt = f'''<message role="system">{system_message}</message><message role="user">{user_query_prompt}</message>'''
 
 
