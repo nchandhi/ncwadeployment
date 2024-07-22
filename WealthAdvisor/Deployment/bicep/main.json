@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.28.1.47646",
-      "templateHash": "2944030756805106229"
+      "templateHash": "9001292871704031366"
     }
   },
   "parameters": {
@@ -1992,7 +1992,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.28.1.47646",
-              "templateHash": "6875226704105965946"
+              "templateHash": "5243619589158230610"
             }
           },
           "parameters": {
@@ -2022,7 +2022,7 @@
             },
             "HostingPlanSku": {
               "type": "string",
-              "defaultValue": "P0v3",
+              "defaultValue": "B1",
               "allowedValues": [
                 "F1",
                 "D1",

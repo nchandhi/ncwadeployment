@@ -27,7 +27,7 @@ This copilot helps the researchers find relevant articles and grants available f
 
 Please navigate to [Research Assistant](ResearchAssistant/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. 
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FResearchAssistant%2FDeployment%2Fbicep%2Fmain.json)
+<!-- [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FResearchAssistant%2FDeployment%2Fbicep%2Fmain.json) -->
 
 ### [Wealth Advsior](WealthAdvisor/README.md)
 
@@ -35,7 +35,7 @@ This copilot helps Wealth Advisors to save time and prepare relevant discussion 
 
 Please navigate to [Wealth Advisor](WealthAdvisor/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. 
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FWealthAdvisor%2FDeployment%2Fbicep%2Fmain.json)
+<!-- [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FWealthAdvisor%2FDeployment%2Fbicep%2Fmain.json) -->
 
 
 <h2><img src="WealthAdvisor/Deployment/images/readMe/supportingDocuments.png" width="64">
