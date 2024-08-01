@@ -11,7 +11,7 @@ Please follow the steps below to generate Adversarial data and set up the evalua
 
 5. Click on the flow created from the notebook to see the results.
 
-    ![Evaluation Results](images/evaluation/safety_evaluation.png)
+    ![Evaluation Results](/Deployment/images/evaluation/safety_evaluation.png)
 
 
 
