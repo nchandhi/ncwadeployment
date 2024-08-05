@@ -21,13 +21,6 @@ It leverages Azure Open AI Service, Azure AI Search and Microsoft Fabric, to cre
 Scenarios
 </h2>
 
-### [Research Assistant](ResearchAssistant/README.md)
-
-This copilot helps the researchers find relevant articles and grants available for their research topic easily using a conversational assistant. Researcher can generate different sections of a grant application with a simple button click, then they can refine the prompts and regenerate individual sections to add more details as needed. Finally, the generated grant application can be exported as a PDF or a Microsoft Word document for further processing.
-
-Please navigate to [Research Assistant](ResearchAssistant/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. 
-
-<!-- [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FResearchAssistant%2FDeployment%2Fbicep%2Fmain.json) -->
 
 ### [Client Advsior](ClientAdvisor/README.md)
 
@@ -35,7 +28,12 @@ This copilot helps Client Advisors to save time and prepare relevant discussion 
 
 Please navigate to [Client Advisor](ClientAdvisor/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. 
 
-<!-- [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FClientAdvisor%2FDeployment%2Fbicep%2Fmain.json) -->
+
+### [Research Assistant](ResearchAssistant/README.md)
+
+This copilot helps the researchers find relevant articles and grants available for their research topic easily using a conversational assistant. Researcher can generate different sections of a grant application with a simple button click, then they can refine the prompts and regenerate individual sections to add more details as needed. Finally, the generated grant application can be exported as a PDF or a Microsoft Word document for further processing.
+
+Please navigate to [Research Assistant](ResearchAssistant/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. 
 
 
 <h2><img src="ClientAdvisor/Deployment/images/readMe/supportingDocuments.png" width="64">
