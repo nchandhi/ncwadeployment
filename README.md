@@ -6,7 +6,7 @@ MENU: [**USER STORY**](#user-story) \| [**SCENARIOS**](#scenarios)  \| [**SUPPOR
 [**CUSTOMER TRUTH**](#customer-truth)
 
 
-<h2><img src="WealthAdvisor/Deployment/images/readMe/userStory.png" width="64">
+<h2><img src="ClientAdvisor/Deployment/images/readMe/userStory.png" width="64">
 <br/>
 User story
 </h2>
@@ -29,16 +29,16 @@ Please navigate to [Research Assistant](ResearchAssistant/README.md) to learn mo
 
 <!-- [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FResearchAssistant%2FDeployment%2Fbicep%2Fmain.json) -->
 
-### [Wealth Advsior](WealthAdvisor/README.md)
+### [Client Advsior](ClientAdvisor/README.md)
 
-This copilot helps Wealth Advisors to save time and prepare relevant discussion topics for scheduled meetings. It provides an overview of daily client meetings with seamless navigation between viewing client profiles and chatting with structured data. Altogether, these features streamline meeting preparation for wealth advisors and result in more productive conversations with clients.
+This copilot helps Client Advisors to save time and prepare relevant discussion topics for scheduled meetings. It provides an overview of daily client meetings with seamless navigation between viewing client profiles and chatting with structured data. Altogether, these features streamline meeting preparation for the advisors and result in more productive conversations with clients.
 
-Please navigate to [Wealth Advisor](WealthAdvisor/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. 
+Please navigate to [Client Advisor](ClientAdvisor/README.md) to learn more about the solution and to deploy the solution to your Azure subscription. 
 
-<!-- [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FWealthAdvisor%2FDeployment%2Fbicep%2Fmain.json) -->
+<!-- [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FClientAdvisor%2FDeployment%2Fbicep%2Fmain.json) -->
 
 
-<h2><img src="WealthAdvisor/Deployment/images/readMe/supportingDocuments.png" width="64">
+<h2><img src="ClientAdvisor/Deployment/images/readMe/supportingDocuments.png" width="64">
 <br/>
 Supporting documents
 </h2>
@@ -46,7 +46,7 @@ Supporting documents
 Supporting documents coming soon.
 
 <br>
-<h2><img src="WealthAdvisor/Deployment/images/readMe/customerTruth.png" width="64">
+<h2><img src="ClientAdvisor/Deployment/images/readMe/customerTruth.png" width="64">
 </br>
 Customer truth
 </h2>
@@ -71,7 +71,7 @@ This release only supports English language input and output. Users should not a
 
 This release does not reflect the opinions, views, or values of Microsoft Corporation or any of its affiliates, subsidiaries, or partners. The system output is solely based on the system's own logic and algorithms, and does not represent any endorsement, recommendation, or advice from Microsoft or any other entity. Microsoft disclaims any liability or responsibility for any damages, losses, or harms arising from the use of this release or its output by any user or third party. 
 
-This release does not provide any financial advice, and is not designed to replace the role of qualified wealth advisors in appropriately advising clients. Users should not use the system output for any financial decisions or transactions, and should consult with a professional financial advisor before taking any action based on the system output. Microsoft is not a financial institution or a fiduciary, and does not offer any financial products or services through this release or its output. 
+This release does not provide any financial advice, and is not designed to replace the role of qualified client advisors in appropriately advising clients. Users should not use the system output for any financial decisions or transactions, and should consult with a professional financial advisor before taking any action based on the system output. Microsoft is not a financial institution or a fiduciary, and does not offer any financial products or services through this release or its output. 
 
 This release is intended as a proof of concept only, and is not a finished or polished product. It is not intended for commercial use or distribution, and is subject to change or discontinuation without notice. Any planned deployment of this release or its output should include comprehensive testing and evaluation to ensure it is fit for purpose and meets the user's requirements and expectations. Microsoft does not guarantee the quality, performance, reliability, or availability of this release or its output, and does not provide any warranty or support for it. 
 

@@ -28,7 +28,7 @@
     "resourceGroupLocation": "[resourceGroup().location]",
     "resourceGroupName": "[resourceGroup().name]",
     "solutionLocation": "[variables('resourceGroupLocation')]",
-    "baseUrl": "https://raw.githubusercontent.com/nchandhi/ncwadeployment/main/WealthAdvisor/"
+    "baseUrl": "https://raw.githubusercontent.com/nchandhi/ncwadeployment/main/ClientAdvisor/"
   },
   "resources": [
     {

@@ -20,9 +20,9 @@ It leverages Azure Open AI Service, Azure AI Search and Microsoft Fabric, to str
  
 **Scenario**
 
-A Woodgrove Bank Wealth Advisor is preparing for upcoming client meetings. He wants insight into his scheduled client meetings, access to portfolio information, a comprehensive understanding of previous meetings, and the ability to ask questions about client’s financial details and interests. 
+A Woodgrove Bank Client Advisor is preparing for upcoming client meetings. He wants insight into his scheduled client meetings, access to portfolio information, a comprehensive understanding of previous meetings, and the ability to ask questions about client’s financial details and interests. 
   
-This solution with an integrated copilot helps Wealth Advisors to save time and prepare relevant discussion topics for scheduled meetings. It provides an overview of daily client meetings with seamless navigation between viewing client profiles and chatting with data. Altogether, these features streamline meeting preparation for wealth advisors and result in more productive conversations with clients. 
+This solution with an integrated copilot helps Client Advisors to save time and prepare relevant discussion topics for scheduled meetings. It provides an overview of daily client meetings with seamless navigation between viewing client profiles and chatting with data. Altogether, these features streamline meeting preparation for client advisors and result in more productive conversations with clients. 
 
 The sample data used in this repository is synthetic and generated using Azure Open AI service. The data is intended for use as sample data only.
 
@@ -71,7 +71,7 @@ https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-regi
 
    <!-- [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FBuild-your-own-AI-Assistant-Solution-Accelerator%2Fmain%2FDeployment%2Fbicep%2Fmain.json) -->
 
-   [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FWealthAdvisor%2FDeployment%2Fbicep%2Fmain.json)
+   [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnchandhi%2Fncwadeployment%2Fmain%2FClientAdvisor%2FDeployment%2Fbicep%2Fmain.json)
 
 3. You will need to select an Azure Subscription, create/select a Resource group, Region, and a unique Solution Prefix.
 
@@ -79,7 +79,7 @@ https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-regi
 
 4. When deployment is complete, Follow steps in [Fabric Deployment guide](./Deployment/FabricDeployment.md) to set up the data processing pipelines and Power BI report in Fabric.
 
-5. Follow steps in [Teams Tab App guide](./Deployment/TeamsAppDeployment.md) to add the Wealth Advisor app to Microsoft Teams.
+5. Follow steps in [Teams Tab App guide](./Deployment/TeamsAppDeployment.md) to add the Client Advisor app to Microsoft Teams.
 
 
 <br/>

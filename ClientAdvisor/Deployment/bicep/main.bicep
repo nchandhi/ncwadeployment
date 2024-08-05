@@ -18,7 +18,7 @@ var resourceGroupName = resourceGroup().name
 
 var solutionLocation = resourceGroupLocation
 // var baseUrl = 'https://raw.githubusercontent.com/microsoft/Build-your-own-AI-Assistant-Solution-Accelerator/main/'
-var baseUrl = 'https://raw.githubusercontent.com/nchandhi/ncwadeployment/main/WealthAdvisor/'
+var baseUrl = 'https://raw.githubusercontent.com/nchandhi/ncwadeployment/main/ClientAdvisor/'
 
 // ========== Managed Identity ========== //
 module managedIdentityModule 'deploy_managed_identity.bicep' = {
